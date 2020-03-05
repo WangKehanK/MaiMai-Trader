@@ -1,0 +1,17 @@
+{
+	"miniprogramRoot": "dist/",
+	"projectname": "post_share_tool",
+	"description": "a simple tool to share post",
+	"appid": "wxaa1a0663bca805a8",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {}
+}

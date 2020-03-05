@@ -25,7 +25,8 @@ $ npm run build:weapp
 ```
 
 ### [Springboot](https://spring.io/projects/spring-boot)
-### more coming...
+### [WeChat Mini-app Debuging Tool](https://developers.weixin.qq.com/miniprogram/en/dev/framework/)
+
 ## Author
 
 👤 **Team of MaiMai**
