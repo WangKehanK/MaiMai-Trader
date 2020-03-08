@@ -9,17 +9,10 @@
 ```
 # To Install: 
 
-# use npm install CLI
 $ npm install -g @tarojs/cli
-# OR use yarn install CLI
-$ yarn global add @tarojs/cli
 
 # To run:
 
-# yarn
-$ yarn dev:weapp
-$ yarn build:weapp
-# npm script
 $ npm run dev:weapp
 $ npm run build:weapp
 ```
