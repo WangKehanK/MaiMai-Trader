@@ -1,8 +1,10 @@
 var express = require('express');
+var graphqlHTTP = require('express-graphql');
 var app = express();
 
-var postsRouter = require('./routes/posts');
-app.use('/posts', postsRouter);
+var { buildSchema } = require('graphql');
+var { userSchema, getUser, retrieveUsers } = require('./routes/users');
+var { postSchema, getPost, retrievePosts } = require('./routes/posts');
 
 app.use(express.json());
 
@@ -16,5 +18,31 @@ app.get("/", function (request, response) {
   response.end("Welcome to the homepage!");
 });
 
-module.exports = app;
 
+var schema = buildSchema(`
+  type Query {
+    user(userId: String!): User
+    users(userId: [String]): [User]
+    post(postId: String!): Post
+    posts(postId: [String]): [Post]
+  },
+  ${userSchema}
+  ${postSchema}
+`);
+
+var root = {
+  user: getUser,
+  users: retrieveUsers,
+  post: getPost,
+  posts: retrievePosts
+};
+
+app.use('/graphql', graphqlHTTP({
+  schema: schema,
+  rootValue: root,
+  graphiql: true,
+}));
+
+app.listen(3000, () => console.log(`Example app listening on port ${3000}!`))
+
+module.exports = app;
