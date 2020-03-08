@@ -31,6 +31,6 @@ $ npm run build:weapp
 
 ## Wiki
 
-[Discord](https://discord.gg/Ea9PXHH)
-[Google Drive](https://drive.google.com/drive/folders/1gXx-r_M86RXGsrVy5znvcgBtc5U8airV?usp=sharing)
-[Figma](https://www.figma.com/file/ugGUXT1HEy2269U9JTsqOH/MMT?node-id=0%3A1)
+* [Discord](https://discord.gg/Ea9PXHH)
+* [Google Drive](https://drive.google.com/drive/folders/1gXx-r_M86RXGsrVy5znvcgBtc5U8airV?usp=sharing)
+* [Figma](https://www.figma.com/file/ugGUXT1HEy2269U9JTsqOH/MMT?node-id=0%3A1)
