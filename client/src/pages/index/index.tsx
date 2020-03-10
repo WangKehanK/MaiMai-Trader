@@ -4,6 +4,9 @@ import { ScrollView, View, Button, Image, Text } from "@tarojs/components";
 import "./index.scss";
 import ImgElement from "../../components/img-element";
 import { AtIcon, AtGrid } from "taro-ui";
+import { gql } from 'apollo-boost';
+
+import client from "../../graphql-client";
 type PageState = {
   checkedImages: Array<String>;
   imgTemp: Array<{ id: string; url: string }>;
@@ -167,10 +170,35 @@ class Index extends Component<{}, PageState> {
         >
           选择图片
         </Button>
+        <Button onClick={this.getData}>
+          获取数据
+        </Button>
       </View>
     );
   }
-
+  getData = () => {
+    // const query = gql`{
+    //   getPost {
+    //     title
+    //     postId
+    //     description
+    //   }
+    //   }
+    // `;
+    // graphqlClient.query({query, variables: {}}).then(result => {
+    //   console.log('result===', result.data);
+    // });
+    client.query({
+      query: gql`
+         {
+          getPost {
+            title
+          }
+        }
+      `
+    }).then(data => console.log("1",data))
+      .catch(error => console.log("2",error));
+  }
   toPage = () => {
       this.showActionSheet((path) =>{
       console.log('choosedImage', path)
