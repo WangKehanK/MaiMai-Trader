@@ -16,10 +16,10 @@ $ npm install -g @tarojs/cli
 $ npm run dev:weapp
 $ npm run build:weapp
 ```
-
 ### [Express.js](https://spring.io/projects/spring-boot)
 ### [WeChat Mini-app Debuging Tool](https://developers.weixin.qq.com/miniprogram/en/dev/framework/)
 ### [GraphQL](https://graphql.org/learn/)
+### [Scrapy](https://docs.scrapy.org/en/latest/index.html)
 
 ## Author
 
