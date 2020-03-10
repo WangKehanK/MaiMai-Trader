@@ -6,7 +6,7 @@ import ImgElement from "../../components/img-element";
 import { AtIcon, AtGrid } from "taro-ui";
 import { gql } from 'apollo-boost';
 
-import client from "../../graphql-client";
+import client from "../../components/graphql/graphql-client";
 type PageState = {
   checkedImages: Array<String>;
   imgTemp: Array<{ id: string; url: string }>;
@@ -14,7 +14,7 @@ type PageState = {
 
 class Index extends Component<{}, PageState> {
   config: Config = {
-    navigationBarTitleText: "首页"
+    navigationBarTitleText: "分享"
   };
 
   constructor(props) {
