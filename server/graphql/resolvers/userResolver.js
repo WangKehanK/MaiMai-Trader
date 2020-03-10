@@ -1,3 +1,5 @@
+
+
 var users = [
     {
         userId: 1,
@@ -17,13 +19,13 @@ var getUser = function (args) {
     return users[0];
 }
 
-var retrieveUsers = function (args) {
+var getUsers = function (args) {
     return users;
 }
 
 export default {
     Query: {
         getUser: getUser,
-        retrieveUsers: retrieveUsers
+        getUsers: getUsers
     }
 }
