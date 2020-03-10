@@ -7,5 +7,3 @@ const makeExecutableSchema = GraphqlTools.makeExecutableSchema;
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 
 export { schema };
-
-

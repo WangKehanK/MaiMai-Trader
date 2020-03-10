@@ -2,8 +2,8 @@ import gql from 'graphql-tag';
 
 const typeDefs = gql`
     extend type Query {
-        getPost: Post,
-        retrievePosts: [Post]
+        getPostById(postId: ID!): Post,
+        getPosts: [Post]
     }
 
     type Post {
@@ -19,6 +19,11 @@ const typeDefs = gql`
     }
 
     type Price {
+        offerPrice: Float
+        originalPrice: Float
+    }
+
+    input PriceInput {
         offerPrice: Float
         originalPrice: Float
     }

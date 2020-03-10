@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
-import postTypeDefs from './post.js';
-import userTypeDefs from './user.js';
+import postTypeDefs from './Post.js';
+import userTypeDefs from './User.js';
 
 const defaultTypeDefs = gql`
     type Query {
