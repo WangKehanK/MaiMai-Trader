@@ -43,8 +43,8 @@ const scssTep = `@import "../../styles/mixin";
 fs.mkdirSync(`./src/pages/${dirName}`); // mkdir $1
 process.chdir(`./src/pages/${dirName}`); // cd $1
 
-fs.writeFileSync('index.tsx', indexTep);
-fs.writeFileSync('index.scss', scssTep);
+fs.writeFileSync('home.tsx.tsx', indexTep);
+fs.writeFileSync('home.tsx.scss', scssTep);
 
 
 console.log(`模版${dirName}已创建`);
