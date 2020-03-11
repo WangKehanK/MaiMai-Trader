@@ -106,3 +106,5 @@ dist
 .vscode-test
 
 public/
+
+config/
