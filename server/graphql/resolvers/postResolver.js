@@ -43,5 +43,18 @@ export default {
             )
             return queryRes;
         }
+    },
+
+    Mutation: {
+        createPost(obj, args, context, info) {
+            const input = JSON.parse(JSON.stringify(args));
+            const mutationRes = createPost(input)
+            // .then(
+            //     (doc) => {
+            //         return doc;
+            //     }
+            // )
+
+        }
     }
 }

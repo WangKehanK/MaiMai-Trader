@@ -1,6 +1,10 @@
 import gql from 'graphql-tag';
 
 const typeDefs = gql`
+    extend type Mutation {
+        createPost(post: PostInput!): Post
+    }
+
     extend type Query {
         getPostById(postId: ID!): Post,
         getPosts: [Post]
@@ -23,14 +27,9 @@ const typeDefs = gql`
         originalPrice: Float
     }
 
-    input PriceInput {
-        offerPrice: Float
-        originalPrice: Float
-    }
-
     type DelieveryMethod {
-        type: String
-        address: String
+        type: String!
+        address: String!
         carrier: String
     }
 
@@ -46,6 +45,28 @@ const typeDefs = gql`
         ElectronicDevice
         Fashion
         HomeAppliance
+    }
+
+    input PriceInput {
+        offerPrice: Float
+        originalPrice: Float
+    }
+
+    input DelieveryMethodInput {
+        type: String
+        address: String
+        carrier: String
+    }
+
+    input PostInput {
+        title: String!
+        description: String!
+        category: Category!
+        condition: Condition!
+        image: [String!]!
+        delieveryMethod: DelieveryMethodInput!
+        price: PriceInput!
+        user: UserInput!
     }
 `
 

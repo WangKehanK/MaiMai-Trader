@@ -1,23 +1,15 @@
-// import express from 'express'
-// import graphqlHTTP from 'express-graphql'
-// import cors from "cors";
+import express from 'express'
+import cors from "cors";
+import mongoose from "mongoose";
+import ApolloServer from 'apollo-server-express';
+
 import { schema } from './graphql/index.js'
-import mongoose from 'mongoose';
 import Config from "./config/keys.js";
-import ApolloServer from 'apollo-server';
+import { uploadRouter } from "./routes/upload.js";
 
 mongoose.connect(Config.KEYS.MongodbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-
-// const app = express();
-
-// app.use(express.json());
-// app.use(cors());
-
-// app.get("/", function (request, response) {
-//   response.end("Welcome to the homepage!");
-// });
 
 // app.use('/graphql', graphqlHTTP({
 //   schema: schema,
@@ -25,18 +17,16 @@ db.on('error', console.error.bind(console, 'connection error:'));
 //   graphiql: true,
 // }));
 
-
-// app.listen(3000, () => console.log(`Example app listening on port ${3000}!`))
-
 const ApolloServerExpress = ApolloServer.ApolloServer;
-const server = new ApolloServerExpress({
-  schema,
-  cors: true,
-  introspection: true,
-  playground: true,
-});
+const server = new ApolloServerExpress({ schema });
 
-server.listen().then(({ url }) => {
-  console.log(`Server ready at ${url}`);
-});
+const app = express();
+app.use(express.json(), cors(), express.static('upload'));
 
+server.applyMiddleware({ app });
+
+app.use('/upload', uploadRouter); // API for uploading files
+
+app.listen({ port: 4000 }, () =>
+  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+);
