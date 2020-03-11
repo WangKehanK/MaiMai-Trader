@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="uploadForm" action="http://localhost:4000/upload" method="post" enctype="multipart/form-data">
+        <h1>测试通过Rest接口上传文件 </h1>
+        <p>指定文件名： <input type="text" name="filename"></p>
+        <p>上传文件： <input type="file" name="file" multiple="multiple"></p>
+        <p>关键字1： <input type="text" name="keyword"></p>
+        <input type="submit" value="上传">
+    </form>
+</body>
+
+</html>

@@ -1,14 +1,15 @@
 import { Post } from "../models/PostModel.js"
 
-const createPost = function (args) {
-    // const newPost = new Post({ postId: "507f1f77bcf86cd799439011", title: "漂亮桌子" });
-    // newPost.save(function (err, post) {
-    //     if (err) {
-    //         console.log(err);
-    //     } else {
-    //         console.log(post.postId + " saved to bookstore collection.");
-    //     }
-    // });
+const createPost = function ({ post }) {
+    const newPost = new Post(post);
+    
+    newPost.save(function (err, post) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(post.postId + " saved to posts collection.");
+        }
+    });
 };
 
 const getPostById = async function (args) {
