@@ -23,7 +23,7 @@ export default class Home extends Component {
   }
   goIndex = () =>{
     Taro.navigateTo({
-      url: "/pages/index/index",
+      url: "/pages/upload/upload",
     })
   }
 }
