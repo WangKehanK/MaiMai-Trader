@@ -46,7 +46,7 @@ const sendImgToAWS = (res, req, files, folder, bucket) => {
 
 const saveToDB = (db) => {
     var p = new Promise(function (resolve, reject) {
-        
+
     });
     return p;
 }
