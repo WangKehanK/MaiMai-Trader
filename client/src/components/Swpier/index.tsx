@@ -1,7 +1,8 @@
 import Taro, { Component } from '@tarojs/taro';
 import { Swiper, SwiperItem, Image } from '@tarojs/components';
 import PropTypes from 'prop-types';
-import './index.scss';
+
+import './index.scss'
 
 export default class MySwiper extends Component {
   static propTypes = {
@@ -31,7 +32,6 @@ export default class MySwiper extends Component {
         <SwiperItem>
           <View className='demo-text-3'>3</View>
         </SwiperItem>
-  ))}
     </Swiper>
   )
   }

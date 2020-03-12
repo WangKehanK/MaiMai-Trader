@@ -27,7 +27,8 @@ class App extends Component {
   config: Config = {
     pages: ["pages/home/home",
             "pages/index/index",
-            "pages/upload/upload",
+            "pages/post/post",
+            "pages/ucenter/ucenter",
             ],
     window: {
       backgroundTextStyle: "light",
@@ -46,7 +47,7 @@ class App extends Component {
         "selectedIconPath": './static/images/home@selected.png',
         "text": "首页"
       }, {
-        "pagePath": 'pages/index/index',
+        "pagePath": 'pages/ucenter/ucenter',
         "iconPath": './static/images/my.png',
         "selectedIconPath": './static/images/my@selected.png',
         "text": "个人"
