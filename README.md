@@ -5,11 +5,13 @@
 > Aiming to solve the real-world problem that international students has no place to sell their second-hand products, especially furniture.
 
 ## Frontend Page Structure
+```
 ├─pages
 │  ├─home # 首页-home page, posting button, products listing
 │  ├─index # 分享页面 - share page
 │  ├─ucenter # 个人 - profile page
 │  └─post # 商品细节页面 - products detail page
+```
 
 ## Prerequisites
 ### [Taro.js](https://github.com/NervJS/taro)
