@@ -2,6 +2,8 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Button, Image } from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
 
+import './index.scss'
+
 export default class UploadImage extends Component<any> {
   uploadImage: string = 'http://localhost:4000/upload'
   static defaultProps = {
