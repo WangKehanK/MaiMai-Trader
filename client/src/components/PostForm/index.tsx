@@ -1,6 +1,8 @@
 import Taro from '@tarojs/taro'
-import { View, Form, Input, Textarea, Button } from '@tarojs/components'
-import { AtButton } from 'taro-ui'
+import { View, Form, Input, Textarea, Button, CoverView } from '@tarojs/components'
+import { AtButton, AtTextarea, AtPagination} from 'taro-ui'
+import UploadImage from '.././Upload'
+
 
 import './index.scss'
 
@@ -18,7 +20,8 @@ export default function PostForm(props) {
             onInput={props.handleTitleInput}
           />
           <View className="form-hint">正文</View>
-          <Textarea
+          <AtTextarea
+            fixed= {true}
             placeholder="点击输入正文"
             className="input-content"
             value={props.formContent}

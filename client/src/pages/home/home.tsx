@@ -43,6 +43,7 @@ export default function Index() {
         />
       ))}
       <AtFloatLayout
+        scrollY='true'
         isOpened={isOpened}
         title="发表新文章"
         onClose={() => setIsOpened(false)}
@@ -54,7 +55,6 @@ export default function Index() {
           handleTitleInput={e => setFormTitle(e.target.value)}
           handleContentInput={e => setFormContent(e.target.value)}
         />
-        <UploadImage />
       </AtFloatLayout>
       <View className="post-button">
         <AtFab onClick={() => setIsOpened(true)}>
