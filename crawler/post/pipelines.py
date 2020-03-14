@@ -19,7 +19,7 @@ class PostPipeline(object):
         dbname = settings['MONGO_DB']
         collname = settings['MONGO_COLL']
         client = pymongo.MongoClient(url)
-        self.db = client.get_database('maimaidb')
+        self.db = client.get_database(dbname)
         self.coll = self.db[collname]
  
     def process_item(self, item, spider):

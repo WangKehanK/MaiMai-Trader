@@ -4,14 +4,17 @@ from post.items import PostItem
 
 class MoonSpider(scrapy.Spider):
     name = "moon"
-    start_urls = ['https://www.moonbbs.com/forum-46-2.html']
+    start_urls = ['https://www.moonbbs.com/forum-46-1.html']
 
     def parse(self, response):
         links = response.xpath("//th/a[1]/@href").extract()
-
         # 解析每一个连接的帖子内容
         for each in links[:6]:
             yield scrapy.Request(each, callback=self.parse_content)
+
+        next_page = response.xpath('//a[@class="nxt"]/@href').get()
+        if next_page:
+            yield scrapy.Request(next_page, callback=self.parse_content)
 
 
     def parse_content(self, response):
@@ -57,6 +60,7 @@ class MoonSpider(scrapy.Spider):
                         content = content + '。' + norm
         else:
             content = description[0].replace('\r','').replace('\n','')
+            
         return content
 
 
@@ -67,7 +71,7 @@ class MoonSpider(scrapy.Spider):
             if info[i] == '新旧程度:':
                 condition = info[i+1]
                 return condition
-
+            
         return None
 
 
