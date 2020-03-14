@@ -2,76 +2,77 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const DeliveryMethod = {
-    type: {
-        type: String,
-        required: true
+    deliveryType: {
+        type: String
     },
     address: {
-        type: String,
-        required: true
+        type: String
     },
     carrier: {
-        type: String,
-        required: true
+        type: String
     }
 };
 
 const Price = {
     offerPrice: {
-        type: Number,
-        required: true
+        type: Number
     },
     originalPrice: {
-        type: Number,
-        required: false
+        type: Number
     }
 };
+
+const Contact = {
+    wechat: String,
+    email: String,
+    phone: String,
+    qq: String
+}
 
 const User = {
     userid: {
-        type: String,
-        required: true
+        type: String
     },
     userName: {
-        type: String,
-        required: true
+        type: String
     },
     school: {
-        type: String,
-        required: true
-    }
+        type: String
+    },
+    contact: Contact
 };
 
-
-const Poster = new Schema({
+const PostSchema = new Schema({
+    isDraft: {
+        type: Boolean
+    },
     postId: {
-        type: String,
+        type: String
     },
     title: {
-        type: String,
-        required: true
+        type: String
     },
     description: {
-        type: String,
-        required: true
+        type: String
     },
     category: {
-        type: String,
-        required: true
+        type: String
     },
     condition: {
-        type: String,
-        required: false
+        type: String
     },
     image: {
+        type: [String]
+    },
+    tags: {
         type: [String],
-        required: true
     },
     deliveryMethod: DeliveryMethod,
     price: Price,
-    user: User
+    user: User,
+    userId: String
 });
 
-const Post = mongoose.model('Poster', Poster, "posts");
+const Post = mongoose.model('Poster', PostSchema, "posts");
 
 export { Post };
