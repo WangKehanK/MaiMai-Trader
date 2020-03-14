@@ -3,6 +3,9 @@ import gql from 'graphql-tag';
 const typeDefs = gql`
     extend type Mutation {
         createPost(post: PostInput!): Post
+        createPostDraft(post: PostInput!): Post
+        updatePost(post: PostInput!): Post
+        updatePostDraft(post: PostInput!): Post
     }
 
     extend type Query {
@@ -20,6 +23,7 @@ const typeDefs = gql`
         delieveryMethod: DelieveryMethod
         price: Price
         user: User
+        tags: [String]
     }
 
     type Price {
@@ -28,7 +32,7 @@ const typeDefs = gql`
     }
 
     type DelieveryMethod {
-        type: String!
+        deliveryType: DeliveryType!
         address: String!
         carrier: String
     }
@@ -47,18 +51,24 @@ const typeDefs = gql`
         HomeAppliance
     }
 
+    enum DeliveryType {
+        delievery,
+        pickup
+    }
+
     input PriceInput {
         offerPrice: Float
         originalPrice: Float
     }
 
     input DelieveryMethodInput {
-        type: String
+        deliveryType: DeliveryType
         address: String
         carrier: String
     }
 
     input PostInput {
+        postId: String
         title: String!
         description: String!
         category: Category!
@@ -66,7 +76,8 @@ const typeDefs = gql`
         image: [String!]!
         delieveryMethod: DelieveryMethodInput!
         price: PriceInput!
-        user: UserInput!
+        userId: String!
+        tags: [String]!
     }
 `
 

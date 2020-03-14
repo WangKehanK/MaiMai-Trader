@@ -13,6 +13,14 @@ const typeDefs = gql`
     type User {
         userId: String
         userName: String
+        contact: Contact
+    }
+
+    type Contact {
+        wechat: String
+        qq: String
+        email: String
+        phone: String
     }
 
     type Point {
@@ -34,8 +42,21 @@ const typeDefs = gql`
     }
 
     input SchoolInput {
-        schoolId: String!
-        schoolName: String!
+        schoolId: String
+        schoolName: String
+    }
+
+    input LocaleInput {
+        city: String
+        state: String
+        country: String
+    }
+
+    input ContactInput {
+        qq: String
+        email: String
+        phone: String
+        wechat: String
     }
 
     input UserInput {
@@ -44,11 +65,10 @@ const typeDefs = gql`
         openId: String # WeChat openId
         unionId: String # WeChat unionId
         gender: Gender
-        city: String
-        state: String
-        country: String
-        avatar: String
+        locale: LocaleInput
         school: SchoolInput
+        avatar: String
+        contact: ContactInput
     }
 `
 
