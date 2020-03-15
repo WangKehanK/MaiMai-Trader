@@ -2,15 +2,15 @@ import gql from 'graphql-tag';
 
 const typeDefs = gql`
     extend type Mutation {
-        createPost(post: PostInput!): Post
-        createPostDraft(post: PostInput!): Post
-        updatePost(post: PostInput!): Post
-        updatePostDraft(post: PostInput!): Post
+        createPost(post: PostInput!): Boolean
+        createPostDraft(post: PostInput!): Boolean
+        updatePost(post: PostInput!): Boolean
+        updatePostDraft(post: PostInput!): Boolean
     }
 
     extend type Query {
         getPostById(postId: ID!): Post,
-        getPosts: [Post]
+        getPosts(limit: Int, offset: Int): [Post]
     }
 
     type Post {
@@ -56,6 +56,15 @@ const typeDefs = gql`
         pickup
     }
 
+    enum Order {
+        priceAscending,
+        priceDescending,
+        ratingAscending,
+        ratingDescending,
+        distanceAscending,
+        distanceDescending
+    }
+
     input PriceInput {
         offerPrice: Float
         originalPrice: Float
@@ -68,7 +77,7 @@ const typeDefs = gql`
     }
 
     input PostInput {
-        postId: String
+        postId: ID
         title: String!
         description: String!
         category: Category!
@@ -76,8 +85,10 @@ const typeDefs = gql`
         image: [String!]!
         delieveryMethod: DelieveryMethodInput!
         price: PriceInput!
-        userId: String!
+        userId: ID!
         tags: [String]!
+        orderBy: Order
+        expiryTime: Date
     }
 `
 
