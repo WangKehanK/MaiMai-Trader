@@ -2,6 +2,8 @@ const errorName = {
     UNAUTHORIZED: "UNAUTHORIZED",
     CREATE_FAILED: "CREATE_FAILED",
     UPDATE_FAILED: "UPDATE_FAILED",
+    GET_POSTS_FAILED: "GET_POSTS_FAILED",
+    GET_POSTS_LIST_FAILED: "GET_POSTS_LIST_FAILED",
 }
 
 const errorType = {
@@ -11,11 +13,15 @@ const errorType = {
     },
     CREATE_FAILED: {
         errorMsg: "Create posts failed.",
-        statusCode: 1
+        statusCode: 100
     },
     UPDATE_FAILED: {
         errorMsg: "Update posts failed.",
-        statusCode: 2
+        statusCode: 101
+    },
+    GET_POSTS_FAILED: {
+        errorMsg: "Get posts list failed.",
+        statusCode: 102
     },
 }
 

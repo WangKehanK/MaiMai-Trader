@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import mongoosePaginate from "mongoose-paginate-v2";
+
 const Schema = mongoose.Schema;
 
 const DeliveryMethod = {
@@ -70,8 +72,12 @@ const PostSchema = new Schema({
     deliveryMethod: DeliveryMethod,
     price: Price,
     user: User,
-    userId: String
+    userId: String,
+    createdTime: Date,
+    expiryTime: Date
 });
+
+PostSchema.plugin(mongoosePaginate)
 
 const Post = mongoose.model('Poster', PostSchema, "posts");
 

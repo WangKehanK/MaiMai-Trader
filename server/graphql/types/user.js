@@ -11,7 +11,7 @@ const typeDefs = gql`
     }
 
     type User {
-        userId: String
+        userId: ID
         userName: String
         contact: Contact
     }
@@ -60,10 +60,10 @@ const typeDefs = gql`
     }
 
     input UserInput {
-        userId: String 
+        userId: ID 
         userName: String # WeChat nickName
-        openId: String # WeChat openId
-        unionId: String # WeChat unionId
+        openId: ID # WeChat openId
+        unionId: ID # WeChat unionId
         gender: Gender
         locale: LocaleInput
         school: SchoolInput
