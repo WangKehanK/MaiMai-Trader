@@ -29,6 +29,7 @@ class App extends Component {
             "pages/index/index",
             "pages/post/post",
             "pages/ucenter/ucenter",
+            "pages/createPost/createPost",
             ],
     window: {
       backgroundTextStyle: "light",
@@ -46,6 +47,11 @@ class App extends Component {
         "iconPath": './static/images/home.png',
         "selectedIconPath": './static/images/home@selected.png',
         "text": "首页"
+      }, {
+        "pagePath": "pages/createPost/createPost",
+        "iconPath": './static/images/camera.png',
+        "selectedIconPath": './static/images/camera@selected.png',
+        "text": ""
       }, {
         "pagePath": 'pages/ucenter/ucenter',
         "iconPath": './static/images/my.png',
