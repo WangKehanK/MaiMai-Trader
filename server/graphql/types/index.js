@@ -3,6 +3,7 @@ import postTypeDefs from './Post.js';
 import userTypeDefs from './User.js';
 
 const defaultTypeDefs = gql`
+    scalar Date
     type Query {
         _empty: String
     }
