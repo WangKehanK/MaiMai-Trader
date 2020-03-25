@@ -22,7 +22,7 @@ const server = new ApolloServerExpress({
     // return ({ errorMsg: error.errorMsg, errorCode: error.statusCode });
     return ({ errorMsg: err.message });
   }
-  // ,
+  //
   // context: (({ req }) => {
   //   const token = req.headers.token || '';
 

@@ -78,11 +78,11 @@ const typeDefs = gql`
 
     input PostInput {
         postId: ID
-        title: String!
-        description: String!
-        category: Category!
-        condition: Condition!
-        image: [String!]
+        title: String
+        description: String
+        category: Category
+        condition: Condition
+        image: [String]
         delieveryMethod: DelieveryMethodInput
         price: PriceInput
         userId: ID

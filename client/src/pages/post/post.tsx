@@ -6,7 +6,7 @@ export default function Post() {
   const router = useRouter()
   const { params } = router
   function toShare(){
-    Taro.redirectTo({
+    Taro.navigateTo({
       url: "/pages/index/index"
     })
   }
