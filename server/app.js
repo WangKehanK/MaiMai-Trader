@@ -16,8 +16,11 @@ const ApolloServerExpress = ApolloServer.ApolloServer;
 const server = new ApolloServerExpress({
   schema,
   formatError: (err) => {
+    console.log(err.message)
     const error = getError(err.message);
-    return ({ errorMsg: error.errorMsg, errorCode: error.statusCode });
+    // TODO: error handling
+    // return ({ errorMsg: error.errorMsg, errorCode: error.statusCode });
+    return ({ errorMsg: err.message });
   }
   // ,
   // context: (({ req }) => {

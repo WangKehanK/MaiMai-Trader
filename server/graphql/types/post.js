@@ -82,11 +82,11 @@ const typeDefs = gql`
         description: String!
         category: Category!
         condition: Condition!
-        image: [String!]!
-        delieveryMethod: DelieveryMethodInput!
-        price: PriceInput!
-        userId: ID!
-        tags: [String]!
+        image: [String!]
+        delieveryMethod: DelieveryMethodInput
+        price: PriceInput
+        userId: ID
+        tags: [String]
         orderBy: Order
         expiryTime: Date
     }
