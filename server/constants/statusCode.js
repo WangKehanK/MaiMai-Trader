@@ -26,7 +26,13 @@ const errorType = {
 }
 
 const getError = errorName => {
-    return errorType[errorName];
+    // TODO: error handling
+
+    if (errorType[errorName]) {
+        return errorType[errorName];
+    } else {
+        return errorName;
+    }
 }
 
 export { errorName, errorType, getError }
