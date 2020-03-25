@@ -19,7 +19,7 @@ const server = new ApolloServerExpress({
     const error = getError(err.message);
     return ({ errorMsg: error.errorMsg, errorCode: error.statusCode });
   }
-  // ,
+  //
   // context: (({ req }) => {
   //   const token = req.headers.token || '';
 

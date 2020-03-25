@@ -3,13 +3,16 @@ import { View } from '@tarojs/components'
 import { AtInput, AtTextarea, AtListItem, AtActionSheet, AtActionSheetItem, AtButton } from 'taro-ui'
 import Title from '../../components/title'
 // import graphql from '../../api/graphql'
-// import { category, createGarbage } from '../../api/gql'
+import { UploadImage } from '../../components'
+import graphql from '../../api/graphql'
+import { createProduct } from "../../api/gpl";
 import './createPost.scss'
 
 type PageState = {
   products: {
-    name: string,
+    title: string,
     description: string,
+    expiryTime: string,
     // categoryId: string,
     // categoryName: string
   },
@@ -25,8 +28,9 @@ export default class Add extends Component<{}, PageState> {
     super(props)
     this.state = {
       products: {
-        name: '',
+        title: '',
         description: '',
+        expiryTime: '2020-03-15T00:48:09Z',
         // categoryId: '',
         // categoryName: ''
       },
@@ -53,7 +57,7 @@ export default class Add extends Component<{}, PageState> {
 
   handleChangeName = (value) => {
     this.setState({
-      products: { ...this.state.products, name: value }
+      products: { ...this.state.products, title: value }
     })
     return value
   }
@@ -73,16 +77,19 @@ export default class Add extends Component<{}, PageState> {
 
   handleInput = async () => {
     const { products } = this.state
-    // const res = await graphql.mutate({ mutation: createProducts, variables: products })
-    // if (res.data.createGarbage) {
-    //   Taro.showToast({
-    //     title: '添加成功',
-    //     icon: 'success',
-    //     duration: 2000
-    //   })
-    //   Taro.navigateBack()
-    // }
     console.log(products)
+    console.log(createProduct)
+    const res = await graphql.mutate({ mutation: createProduct, variables: products })
+    // const res = await graphql.mutate({ mutation: gql`mutation {createPost(post: {description: "dfsf", expiryTime:"2020-03-15T00:48:09Z"})}`} );
+
+    if (res.data.createProduct) {
+      Taro.showToast({
+        title: '添加成功',
+        icon: 'success',
+        duration: 2000
+      })
+      Taro.navigateBack()
+    }
   }
 
   renderForm = () => {
@@ -92,11 +99,11 @@ export default class Add extends Component<{}, PageState> {
         <View className='section'>
           <Title title='商品名称'></Title>
           <AtInput
-            name='name'
+            name='title'
             title='名称'
             type='text'
             placeholder='请输入商品名称'
-            value={products.name}
+            value={products.title}
             onChange={this.handleChangeName.bind(this)}
           />
         </View>
@@ -115,6 +122,7 @@ export default class Add extends Component<{}, PageState> {
             maxLength={200}
             placeholder='请输入商品描述'
           />
+          <UploadImage />
         </View>
         <View className='section'>
           <AtButton type='primary' onClick={this.handleInput.bind(this)}>提交</AtButton>

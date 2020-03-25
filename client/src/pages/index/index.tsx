@@ -6,7 +6,7 @@ import ImgElement from "../../components/img-element";
 import { AtIcon, AtGrid } from "taro-ui";
 import { gql } from 'apollo-boost';
 
-import client from "../../components/graphql/graphql-client";
+import client from '../../api/graphql'
 type PageState = {
   checkedImages: Array<String>;
   imgTemp: Array<{ id: string; url: string }>;
