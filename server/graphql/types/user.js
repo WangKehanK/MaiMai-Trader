@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 const typeDefs = gql`
     extend type Mutation {
-        createUser(user: UserInput!): User
+        authenticate(user: UserInput!): User
     }
 
     extend type Query {
@@ -60,7 +60,6 @@ const typeDefs = gql`
     }
 
     input UserInput {
-        userId: ID 
         userName: String # WeChat nickName
         openId: ID # WeChat openId
         unionId: ID # WeChat unionId
