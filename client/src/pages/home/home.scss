@@ -1,0 +1,25 @@
+/** banner **/
+.banner {
+  width: 750px;
+  height: 417px;
+}
+
+.banner .img {
+  width: 100%;
+  height: 417px;
+  background-size: cover;
+}
+.post-button {
+  position: fixed;
+  right: 60px;
+  bottom: 80px;
+}
+
+.home {
+  .grid {
+    .content-inner__img {
+      width: 200px;
+      height: 200px;
+    }
+  }
+}
