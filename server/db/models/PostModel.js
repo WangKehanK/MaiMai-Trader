@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import mongoosePaginate from "mongoose-paginate-v2";
+import { User } from "./UserModel.js";
 
 const Schema = mongoose.Schema;
 
@@ -22,26 +23,6 @@ const Price = {
     originalPrice: {
         type: Number
     }
-};
-
-const Contact = {
-    wechat: String,
-    email: String,
-    phone: String,
-    qq: String
-}
-
-const User = {
-    userid: {
-        type: String
-    },
-    userName: {
-        type: String
-    },
-    school: {
-        type: String
-    },
-    contact: Contact
 };
 
 const PostSchema = new Schema({
