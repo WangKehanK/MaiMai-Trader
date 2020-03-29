@@ -6,11 +6,11 @@ type PageStateProps = {
   title: string
 }
 
-interface Title {
+interface ProductTitle {
   props: PageStateProps;
 }
 
-class Title extends Component<{}, PageStateProps> {
+export default class ProductTitle extends Component<{}, PageStateProps> {
   render() {
     return (
       <View className='title'>
@@ -20,4 +20,3 @@ class Title extends Component<{}, PageStateProps> {
   }
 }
 
-export default Title

@@ -1,4 +1,7 @@
-/** banner **/
+
+@import '../../style/theme.scss';
+
+/** swpier 备用 **/
 .banner {
   width: 750px;
   height: 417px;
@@ -22,4 +25,27 @@
       height: 200px;
     }
   }
+}
+
+.index-top-view-second {
+  display: flex;
+  margin-top: 48px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+
+.tag-list {
+  width: 100%;
+  height: 120px;
+  box-sizing: border-box;
+  white-space:nowrap;
+}
+
+.tag-list .tag {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  margin: 20px 20px 20px;
 }

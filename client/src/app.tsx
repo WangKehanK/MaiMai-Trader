@@ -5,6 +5,8 @@ import { Provider } from "@tarojs/redux";
 import Index from "./pages/index";
 
 import configStore from "./store";
+import tabbar_home from './static/images/home.svg';
+import tabbar_home_selected from './static/images/home@selected.svg';
 
 import "./app.scss";
 
@@ -30,7 +32,9 @@ class App extends Component {
             "pages/post/post",
             "pages/ucenter/ucenter",
             "pages/createPost/createPost",
-            ],
+            "pages/createPost2/createPost2",
+            "pages/createPost3/createPost3",
+    ],
     window: {
       backgroundTextStyle: "light",
       navigationBarBackgroundColor: "#fff",
@@ -49,13 +53,13 @@ class App extends Component {
         "text": "首页"
       }, {
         "pagePath": "pages/createPost/createPost",
-        "iconPath": './static/images/camera.png',
-        "selectedIconPath": './static/images/camera@selected.png',
-        "text": ""
+        "iconPath": './static/images/plus-square.png',
+        "selectedIconPath": './static/images/plus-square@selected.png',
+        "text": "添加"
       }, {
         "pagePath": 'pages/ucenter/ucenter',
-        "iconPath": './static/images/my.png',
-        "selectedIconPath": './static/images/my@selected.png',
+        "iconPath": './static/images/user.png',
+        "selectedIconPath": './static/images/user@selected.png',
         "text": "个人"
       }],
     }

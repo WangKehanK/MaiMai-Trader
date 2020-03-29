@@ -7,14 +7,13 @@ import { ProductTitle, UploadImage } from '../../components'
 import graphql from '../../api/graphql'
 import { createProduct } from "../../api/gpl";
 
-import './createPost.scss'
+import './createPost2.scss'
 
 type PageState = {
   products: {
     title: string,
     description: string,
     expiryTime: string,
-    category: string,
     // categoryId: string,
     // categoryName: string
   },
@@ -34,7 +33,6 @@ export default class Add extends Component<{}, PageState> {
         title: '',
         description: '',
         expiryTime: '2020-03-15T00:48:09Z',
-        category: '',
         // categoryId: '',
         // categoryName: ''
       },
@@ -72,7 +70,7 @@ export default class Add extends Component<{}, PageState> {
   }
   handleChange (value) {
     this.setState({
-      products: {...this.state.products, category:value}
+      value
     })
   }
   handleChangeDescription = (event) => {
@@ -137,9 +135,9 @@ export default class Add extends Component<{}, PageState> {
       />
     )
   }
-  createNext = async (callback) => {
+  createNext = () => {
     Taro.navigateTo({
-      url: "/pages/createPost2/createPost2"
+      url: "/pages/createPost3/createPost3"
     })
   }
   cancel = () => {
@@ -161,38 +159,32 @@ export default class Add extends Component<{}, PageState> {
       <View className='add'>
         {/*{this.renderForm()}*/}
         {this.renderCategoryList()}
-        <AtRadio
-          className='radio'
-          options={[
-            { label: 'Furniture', value: 'Furniture' },
-          ]}
-          value={this.state.products.category}
-          onClick={this.handleChange.bind(this)}
-        />
-        <AtRadio
-          className='radio'
-          options={[
-            { label: 'Electronic', value: 'Electronic'},
-          ]}
-          value={this.state.products.category}
-          onClick={this.handleChange.bind(this)}
-        />
-        <AtRadio
-          className='radio'
-          options={[
-            { label: 'Fashion', value: 'Fashion',},
-          ]}
-          value={this.state.products.category}
-          onClick={this.handleChange.bind(this)}
-        />
-        <AtRadio
-          className='radio'
-          options={[
-            { label: 'Home Appliance', value: 'Home Appliance'}
-          ]}
-          value={this.state.products.category}
-          onClick={this.handleChange.bind(this)}
-        />
+        <View className='radio-group'>
+          <AtRadio
+            className='radio'
+            options={[
+              { label: 'NEW', value: 'option1' },
+            ]}
+            value={this.state.value}
+            onClick={this.handleChange.bind(this)}
+          />
+          <AtRadio
+            className='radio'
+            options={[
+              { label: 'GOOD', value: 'option2'},
+            ]}
+            value={this.state.value}
+            onClick={this.handleChange.bind(this)}
+          />
+          <AtRadio
+            className='radio'
+            options={[
+              { label: 'FINE', value: 'option3',},
+            ]}
+            value={this.state.value}
+            onClick={this.handleChange.bind(this)}
+          />
+        </View>
         {/*<View className="btn-group">*/}
         {/*  <AtButton className="button">Button</AtButton>*/}
         {/*  <AtButton className="button">Button</AtButton>*/}
