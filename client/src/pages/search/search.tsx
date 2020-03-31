@@ -74,7 +74,7 @@ class Page extends Component<{}, PageState> {
   goResult(keywords) {
     setKeywordInHistory(keywords)
     Taro.navigateTo({
-      url: `/pages/searchResult/index?keywords=${keywords}`
+      url: `/pages/searchResult/searchResult?keywords=${keywords}`
     })
   }
 
