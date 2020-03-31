@@ -10,24 +10,30 @@ const Contact = {
     qq: String
 }
 
+const School = {
+    schoolId: String,
+    schoolName: String,
+}
+
+const Locale = {
+    city: String,
+    state: String,
+    country: String
+}
+
 const User = {
-    userid: {
-        type: String
-    },
-    userName: {
-        type: String
-    },
-    school: {
-        type: String
-    },
-    unionId: {
-        type: String
-    },
+    userName: String,
+    unionId: String,
+    openId: String,
+    gender: String,
+    avatar: String,
+    locale: Locale,
+    school: School,
     contact: Contact
 };
 
 const UserSchema = new Schema({
-    user: User,
+    ...User,
     createdTime: Date,
 });
 

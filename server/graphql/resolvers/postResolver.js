@@ -30,7 +30,7 @@ export default {
                 return mutationRes;
             } catch (error) {
                 console.log(error)
-                return new ApolloServer.ApolloError(error.message);;
+                return new ApolloServer.ApolloError(error.message);
             }
         },
 
@@ -40,7 +40,7 @@ export default {
                 const mutationRes = await createPostDraft(input);
                 return mutationRes;
             } catch (error) {
-                return new ApolloServer.ApolloError(error.message);;
+                return new ApolloServer.ApolloError(error.message);
             }
         },
 
@@ -50,7 +50,7 @@ export default {
                 const mutationRes = await updatePost(input);
                 return mutationRes;
             } catch (error) {
-                return new ApolloServer.ApolloError(error.message);;
+                return new ApolloServer.ApolloError(error.message);
             }
         },
 
@@ -60,7 +60,7 @@ export default {
                 const mutationRes = await updatePostDraft(input);
                 return mutationRes;
             } catch (error) {
-                return new ApolloServer.ApolloError(error.message);;
+                return new ApolloServer.ApolloError(error.message);
             }
         }
     }

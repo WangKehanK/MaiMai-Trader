@@ -27,11 +27,8 @@ const server = new ApolloServerExpress({
   context: (({ req }) => {
     const token = req.headers.token || '';
 
-    // console.log(token);
-    // validateUserToken(token);
-    // try to retrieve a user with the token
-    // const user = getUser(token);
-    // // add the user to the context
+    if (!token) throw new ApolloServer.AuthenticationError('You must login!');
+
     return { token };
   })
 });

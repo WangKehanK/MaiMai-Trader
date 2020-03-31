@@ -63,9 +63,25 @@ const getPostById = async function (args) {
     }
 };
 
-const getPosts = async function ({ limit, offset }) {
+const getPosts = async function ({ limit, offset, filters }) {
+    var searchText = filters.text || "";
+    delete filters.text;
+
+    var processedFilters = JSON.parse(JSON.stringify(filters));
+
     try {
-        const query = await Post.paginate({}, { offset: offset, limit: limit });
+        const query = await Post.paginate({
+            $or: [
+                { description: { $regex: searchText, $options: "i" }, ...processedFilters },
+                { title: { $regex: searchText, $options: "i" }, ...processedFilters }
+            ]
+        }, { offset: offset, limit: limit }).then(
+            (docs, err) => {
+                console.log(docs);
+                return docs;
+            }
+        );
+
         return query.docs;
     } catch (err) {
         throw new Error(errorName.GET_POSTS_LIST_FAILED);

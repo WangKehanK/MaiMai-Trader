@@ -16,6 +16,16 @@ var validateUserToken = function (token) {
     });
 }
 
+
+var generateToken = function (data) {
+    var token = jwt.sign({
+        data: data
+    },
+        Config.JWT.PRIVATE_KEY);
+    return token;
+}
+
 export {
-    validateUserToken
+    validateUserToken,
+    generateToken
 }
