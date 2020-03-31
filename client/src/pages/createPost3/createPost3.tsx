@@ -83,38 +83,43 @@ export default class Add extends Component<{}, PageState> {
     })
   }
 
-  handleInput = async () => {
-    const { products } = this.state
-    console.log(products)
-    console.log(createProduct)
-    const res = await graphql.mutate({ mutation: createProduct, variables: products })
-    // const res = await graphql.mutate({ mutation: gql`mutation {createPost(post: {description: "dfsf", expiryTime:"2020-03-15T00:48:09Z"})}`} );
-
-    if (res.data.createProduct) {
-      Taro.showToast({
-        title: '添加成功',
-        icon: 'success',
-        duration: 2000
-      })
-      Taro.navigateBack()
-    }
-  }
+  // handleInput = async () => {
+  //   const { products } = this.state
+  //   console.log(products)
+  //   console.log(createProduct)
+  //   const res = await graphql.mutate({ mutation: createProduct, variables: products })
+  //   // const res = await graphql.mutate({ mutation: gql`mutation {createPost(post: {description: "dfsf", expiryTime:"2020-03-15T00:48:09Z"})}`} );
+  //
+  //   if (res.data.createProduct) {
+  //     Taro.showToast({
+  //       title: '添加成功',
+  //       icon: 'success',
+  //       duration: 2000
+  //     })
+  //     Taro.navigateBack()
+  //   }
+  // }
 
   renderForm = () => {
     const { products } = this.state
     return (
       <View>
         <View className='section'>
-          <ProductTitle title='商品名称'></ProductTitle>
+          <Text>\n</Text>
+          <ProductTitle title='Title' />
+          <Text>\n</Text>
           <AtInput
+            className='at-input'
             name='title'
             title='名称'
             type='text'
             placeholder='请输入商品名称'
+            placeholderClass='center'
             value={products.title}
             onChange={this.handleChangeName.bind(this)}
           />
         </View>
+        <Text>\n</Text>
         {/*<View className='section'>*/}
         {/*  <ProductTitle title='商品类别'></ProductTitle>*/}
         {/*  <AtListItem title='类别' extraText={products.categoryName} onClick={() => {*/}
@@ -123,27 +128,48 @@ export default class Add extends Component<{}, PageState> {
         {/*  />*/}
         {/*</View>*/}
         <View className='section'>
-          <ProductTitle title='描述'></ProductTitle>
+          <ProductTitle title='Description' />
+          <Text>\n</Text>
           <AtTextarea
+            className='at-textarea'
             value={products.description}
             onChange={this.handleChangeDescription.bind(this)}
             maxLength={200}
             placeholder='请输入商品描述'
           />
         </View>
-        <View className='section'>
-          <AtButton type='primary' onClick={this.handleInput.bind(this)}>提交</AtButton>
-        </View>
+        {/*<View className='section'>*/}
+        {/*  <AtButton type='primary' onClick={this.handleInput.bind(this)}>提交</AtButton>*/}
+        {/*</View>*/}
       </View>
     )
+  }
+  createNext = async (callback) => {
+    Taro.navigateTo({
+      url: "/pages/createPost4/createPost4"
+    })
+  }
+  cancel = () => {
+    Taro.showActionSheet({
+      itemList: [
+        "您确定要退出吗",
+        "继续",
+      ],
+      success: function ({tapIndex}) {
+        if(tapIndex===0) {
+          Taro.switchTab({url: '/pages/home/home'})
+        }
+
+      }
+    })
   }
 
   render() {
     return (
       <View className='add'>
         {this.renderForm()}
-        <ProductTitle title = '上传图片'/>
-        <UploadImage />
+        <AtButton type='primary' className='nextButton' circle=true onClick={this.createNext}> Next </AtButton>
+        <AtButton type= 'secondary' className='cancelButton' circle=true onClick={this.cancel}> cancel </AtButton>
       </View>
     )
   }

@@ -163,6 +163,20 @@ page {
   color: red;
   font-size: 30px;
 }
+.at-input{
+  margin-left: 0px;
+  /* Rectangle 229 */
+  box-sizing: border-box;
+  border-radius: 10px;
+  //margin: 0 15px 0 15px;
+}
+
+.at-textarea{
+  /* Rectangle 229 */
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
 
 .home {
   .grid {
@@ -171,4 +185,29 @@ page {
       height: 200px;
     }
   }
+}
+.radio:hover {
+  border-color: #FFB800;
+}
+.radio:active{
+  color: transparent;
+}
+
+.nextButton{
+  width: 80%;
+  margin-top: 288px;
+  background: #FFB800;
+  font: Roboto;
+  font-weight: bold;
+  border: none;
+
+}
+.nextButton:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.cancelButton{
+  margin-top:20px;
+  width: 80%;
+  border: none;
 }
