@@ -34,6 +34,7 @@ class App extends Component {
             "pages/createPost4/createPost4",
             "pages/createPost5/createPost5",
             "pages/search/search",
+            "pages/searchResult/searchResult",
     ],
     window: {
       backgroundTextStyle: "light",
