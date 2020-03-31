@@ -1,7 +1,6 @@
 import { authenticate } from "../../db/controller/UserController.js";
 import ApolloServer from 'apollo-server-express';
 
-
 var users = [
     {
         userId: 1,

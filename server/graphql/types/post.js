@@ -10,7 +10,7 @@ const typeDefs = gql`
 
     extend type Query {
         getPostById(postId: ID!): Post,
-        getPosts(limit: Int, offset: Int): [Post]
+        getPosts(limit: Int!, offset: Int!, filters: PostFilters!): [Post]
     }
 
     type Post {
@@ -89,6 +89,22 @@ const typeDefs = gql`
         tags: [String]
         orderBy: Order
         expiryTime: Date
+        city: String
+        school: [String]
+    }
+
+    input PostFilters {
+        category: Category
+        condition: Condition
+        delieveryMethod: DelieveryMethodInput
+        price: PriceInput
+        userId: ID
+        tags: [String]
+        orderBy: Order
+        expiryTime: Date
+        text: String
+        city: String
+        school: [String]
     }
 `
 

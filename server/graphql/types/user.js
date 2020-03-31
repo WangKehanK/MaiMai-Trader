@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 const typeDefs = gql`
     extend type Mutation {
-        authenticate(user: UserInput!): User
+        authenticate(user: UserInput!): UserToken
     }
 
     extend type Query {
@@ -14,6 +14,14 @@ const typeDefs = gql`
         userId: ID
         userName: String
         contact: Contact
+        gender: Gender
+        locale: Locale
+        school: School
+        avatar: String
+    }
+
+    type UserToken {
+        token: String
     }
 
     type Contact {
@@ -36,9 +44,15 @@ const typeDefs = gql`
         location: Point
     }
 
+    type Locale {
+        city: String
+        state: String
+        country: String
+    }
+
     enum Gender {
         Male
-        Femal
+        Female
     }
 
     input SchoolInput {

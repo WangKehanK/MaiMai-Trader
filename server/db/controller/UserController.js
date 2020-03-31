@@ -1,33 +1,46 @@
 import { UserModel } from "../models/UserModel.js"
 import { errorName } from "../../constants/statusCode.js";
-import { ObjectId } from "../../helper/helper.js";
+import { generateToken } from "../../helper/validateUser.js";
 
-
-const authenticate = async function ({ user }) {
-    // const userData = {
-    //     user: { unionId: 'aaa' },
-    // };
-    const query = await UserModel.findOne(user, (err, res) => {
-        if (res) {
-            console.log(res);
-            // if user exists return the user
-        } else {
-            const newUser = new UserModel({ user: userData });
-            console.log(userData);
-            console.log(newUser);
+function upsertUser(user, userData) {
+    return new Promise(function (resolve, reject) {
+        UserModel.findOne(user, (err, res) => {
+            if (err) {
+                reject(err);
+            }
+            const newUser = new UserModel(userData);
             try {
-                newUser.save();
-                return true;
+                // newUser.save();
+                resolve(newUser);
             } catch (err) {
                 console.log(err);
-                throw new Error(errorName.CREATE_FAILED);
+                reject(errorName.CREATE_FAILED);
             }
-        }
+        });
+    });
+}
+
+var authenticate = async function ({ user }) {
+    const userData = {
+        ...user
+    };
+
+    var unionId = {
+        unionId: user.unionId
+    }
+
+    var ret = await upsertUser(unionId, userData).then((res, err) => {
+        return res;
     });
 
+    console.log(ret);
+    var token = generateToken({
+        userId: ret._id
+    });
 
-
+    return { token: token };
 };
+
 
 export { authenticate }
 
