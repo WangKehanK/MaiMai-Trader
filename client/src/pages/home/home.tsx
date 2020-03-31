@@ -4,8 +4,6 @@ import {AtButton, AtIcon, AtSearchBar, AtTag} from "taro-ui";
 
 import { Homeitem, Waterfall } from './../../components';
 
-import searchBar from '../../static/home/searchBar.svg';
-
 
 import './home.scss'
 

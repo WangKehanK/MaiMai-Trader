@@ -3,7 +3,7 @@ import { View } from '@tarojs/components'
 import { AtRadio, AtButton, AtGrid } from 'taro-ui'
 
 // import graphql from '../../api/graphql'
-import { ProductTitle, UploadImage } from '../../components'
+import { ProductTitle } from '../../components'
 import graphql from '../../api/graphql'
 import { createProduct } from "../../api/gpl";
 
