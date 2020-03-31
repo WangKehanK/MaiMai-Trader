@@ -2,10 +2,11 @@
   color: #232323;
   position: relative;
   height: 100%;
-  // .search__input {
-  //   position: absolute;
-  //   width: 100%;
-  // }
+   .search__input {
+     //position: absolute;
+     //width: 100%;
+     background:#FFB800;
+   }
   .search_content {
     padding: 108px 36px 24px 36px;
     height: 100%;
@@ -26,6 +27,7 @@
     }
     .search__history__title__icon {
       padding: 15px;
+      color: grey;
     }
   }
   .search__history__list__item {

@@ -105,7 +105,7 @@ class Page extends Component<{}, PageState> {
     return (
       <View className='search_container'>
         <AtSearchBar
-          actionName='搜一下'
+          actionName='买买一下'
           value={searchValue}
           onChange={this.searchTextChange.bind(this)}
           onActionClick={this.searchResult.bind(this)}
@@ -121,7 +121,7 @@ class Page extends Component<{}, PageState> {
                 <Text className='search__history__title__label'>
                   搜索历史
                 </Text>
-                <AtIcon prefixClass='fa' value='trash-o' size='20' color='Black' className='search__history__title__icon' onClick={this.clearKeywordInHistory.bind(this)}></AtIcon>
+                <AtIcon value='trash' size='20' className='search__history__title__icon' onClick={this.clearKeywordInHistory.bind(this)}></AtIcon>
               </View>
               <ScrollView className='search__history__list' scrollX>
                 {
@@ -130,67 +130,61 @@ class Page extends Component<{}, PageState> {
               </ScrollView>
             </View> : ''
           }
-          <View className='search__hot'>
-            <View className='search__history__title'>
-              <Text className='search__history__title__label'>
-                热搜榜
-              </Text>
-            </View>
-            {
-              hotList.length === 0 ? <CLoading /> : ''
-            }
-            <View className='search__hot__list'>
-              {
-                hotList.map((item, index) => <View className='search__hot__list__item flex flex-align-center' key={item.searchWord} onClick={this.goResult.bind(this, item.searchWord)}>
-                  <View className={
-                    classnames({
-                      search__hot__list__item__index: true,
-                      spec: index <= 2
-                    })
-                  }>
-                    {index + 1}
-                  </View>
-                  <View className='search__hot__list__item__info'>
-                    <View className="flex flex-align-center">
-                      <Text className={
-                        classnames({
-                          search__hot__list__item__info__title: true,
-                          spec: index <= 2
-                        })
-                      }>
-                        {item.searchWord}
-                      </Text>
-                      <Text className='search__hot__list__item__info__score'>
-                        {item.score}
-                      </Text>
-                      {
-                        item.iconUrl ? <Image src={item.iconUrl} mode="widthFix" className={
-                          classnames({
-                            search__hot__list__item__info__icon: true,
-                            spec: item.iconType === 5
-                          })
-                        }/> : ''
-                      }
-                    </View>
-                    <View className='search__hot__list__item__info__desc'>
-                      {item.content}
-                    </View>
-                  </View>
-                </View>)
-              }
-            </View>
-          </View>
+          {/*<View className='search__hot'>*/}
+          {/*  <View className='search__history__title'>*/}
+          {/*    <Text className='search__history__title__label'>*/}
+          {/*      热搜榜*/}
+          {/*    </Text>*/}
+          {/*  </View>*/}
+          {/*  {*/}
+          {/*    hotList.length === 0 ? <CLoading /> : ''*/}
+          {/*  }*/}
+          {/*  <View className='search__hot__list'>*/}
+          {/*    {*/}
+          {/*      hotList.map((item, index) => <View className='search__hot__list__item flex flex-align-center' key={item.searchWord} onClick={this.goResult.bind(this, item.searchWord)}>*/}
+          {/*        <View className={*/}
+          {/*          classnames({*/}
+          {/*            search__hot__list__item__index: true,*/}
+          {/*            spec: index <= 2*/}
+          {/*          })*/}
+          {/*        }>*/}
+          {/*          {index + 1}*/}
+          {/*        </View>*/}
+          {/*        <View className='search__hot__list__item__info'>*/}
+          {/*          <View className="flex flex-align-center">*/}
+          {/*            <Text className={*/}
+          {/*              classnames({*/}
+          {/*                search__hot__list__item__info__title: true,*/}
+          {/*                spec: index <= 2*/}
+          {/*              })*/}
+          {/*            }>*/}
+          {/*              {item.searchWord}*/}
+          {/*            </Text>*/}
+          {/*            <Text className='search__hot__list__item__info__score'>*/}
+          {/*              {item.score}*/}
+          {/*            </Text>*/}
+          {/*            {*/}
+          {/*              item.iconUrl ? <Image src={item.iconUrl} mode="widthFix" className={*/}
+          {/*                classnames({*/}
+          {/*                  search__hot__list__item__info__icon: true,*/}
+          {/*                  spec: item.iconType === 5*/}
+          {/*                })*/}
+          {/*              }/> : ''*/}
+          {/*            }*/}
+          {/*          </View>*/}
+          {/*          <View className='search__hot__list__item__info__desc'>*/}
+          {/*            {item.content}*/}
+          {/*          </View>*/}
+          {/*        </View>*/}
+          {/*      </View>)*/}
+          {/*    }*/}
+          {/*  </View>*/}
+          {/*</View>*/}
         </ScrollView>
       </View>
     )
   }
 }
 
-// #region 导出注意
-//
-// 经过上面的声明后需要将导出的 Taro.Component 子类修改为子类本身的 props 属性
-// 这样在使用这个子类时 Ts 才不会提示缺少 JSX 类型参数错误
-//
-// #endregion
 
 export default Page
