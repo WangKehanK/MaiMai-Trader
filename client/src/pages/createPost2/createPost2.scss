@@ -16,7 +16,9 @@
     font:Roboto;
     font-weight: bold;
     word-break: break-word;
-
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
   .at-radio__option{
     padding-left: 0px;
@@ -32,6 +34,10 @@
 //.radio:not(:last-child) {
 //  border-right: none; /* Prevent double borders */
 //}
+
+.radio-group{
+  margin-bottom: auto;
+}
 
 .radio:hover {
   border-color: #FFB800;

@@ -5,8 +5,7 @@ import { Provider } from "@tarojs/redux";
 import Index from "./pages/index";
 
 import configStore from "./store";
-import tabbar_home from './static/images/home.svg';
-import tabbar_home_selected from './static/images/home@selected.svg';
+
 
 import "./app.scss";
 
@@ -34,6 +33,9 @@ class App extends Component {
             "pages/createPost/createPost",
             "pages/createPost2/createPost2",
             "pages/createPost3/createPost3",
+            "pages/createPost4/createPost4",
+            "pages/createPost5/createPost5",
+            "pages/search/search",
     ],
     window: {
       backgroundTextStyle: "light",

@@ -1,10 +1,11 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import {ScrollView, View} from '@tarojs/components'
-import { AtSearchBar, AtTag, AtTabBar } from "taro-ui";
+import {AtButton, AtIcon, AtSearchBar, AtTag} from "taro-ui";
 
 import { Homeitem, Waterfall } from './../../components';
-import tabbar_home from './../../static/images/home.svg';
-import tabbar_home_selected from './../../static/images/home@selected.svg';
+
+import searchBar from '../../static/home/searchBar.svg';
+
 
 import './home.scss'
 
@@ -53,6 +54,11 @@ export default class Home extends Component {
       keyword: value
     })
   }
+  toSearch = () => {
+    Taro.navigateTo({
+      url: '/pages/search/search'
+    })
+  }
 
   onActionClick() {
     const { keyword } = this.state
@@ -67,16 +73,19 @@ export default class Home extends Component {
     }
   }
 
-  renderSearch = () => {
-    const { keyword } = this.state
-    return (
-      <AtSearchBar
-        value={keyword}
-        onChange={this.onChange.bind(this)}
-        onActionClick={this.onActionClick.bind(this)}
-      />
-    )
-  }
+  // renderSearch = () => {
+  //   const { keyword } = this.state
+  //   return (
+  //     <AtSearchBar
+  //       className='searchBar'
+  //       circle
+  //       value={keyword}
+  //       onChange={this.onChange.bind(this)}
+  //       onActionClick={this.onActionClick.bind(this)}
+  //     />
+  //
+  //   )
+  // }
 
 
   onClick (data) {
@@ -90,9 +99,28 @@ export default class Home extends Component {
     else if (Taro.getEnv() === Taro.ENV_TYPE.WEB) alert(content)
   }
   render() {
+    const { keyword } = this.state.keyword
     return (
       <View className='home'>
-        {this.renderSearch()}
+        {/*{this.renderSearch()}*/}
+        {/*<view class='page_row' >*/}
+        {/*  <view class="search" >*/}
+        {/*    <view class="df search_arr" >*/}
+        {/*      /!*<input class="sousuo" disabled placeholder="搜索" onClick={this.onActionSearch}/>*!/*/}
+        {/*      <AtButton className="sousuo" onClick={this.toSearch}>*/}
+        {/*        <icon className="searchcion" size='15' type='search' /><text>搜索</text>*/}
+        {/*      </AtButton>*/}
+        {/*    </view>*/}
+        {/*  </view>*/}
+        {/*</view>*/}
+        <View onClick={this.toSearch.bind(this)}>
+          <AtSearchBar
+            actionName='搜一下'
+            disabled={true}
+            value={keyword}
+            onChange={this.toSearch.bind(this)}
+          />
+        </View>
         <View className='index-top-view-second'>
           {
             this.state.hospitalList.map((item, index) => {
@@ -105,26 +133,11 @@ export default class Home extends Component {
             })
           }
         </View>
-        {/*<ScrollView className='scrollview'*/}
-        {/*            scrollX*/}
-        {/*            scrollWithAnimation*/}
-        {/*            scrollTop='0'*/}
-        {/*            style='height: 150px;width: 100%;box-sizing:border-box;white-space:nowrap'*/}
-        {/*            lowerThreshold='20'*/}
-        {/*            upperThreshold='20'*/}
-        {/*>*/}
-        {/*  <View style='height:150px;background-color:rgb(26,173,25);width:300px;display:inline-block;'>A</View>*/}
-        {/*  <View style='height:150px;background-color:rgb(39,130,215);width:300px;display:inline-block;'>B</View>*/}
-        {/*  <View style='height:150px;background-color:rgb(241,241,241);color: #333;width:300px;display:inline-block;'>C</View>*/}
-        {/*</ScrollView>*/}
 
         <ScrollView scrollX className='tag-list'>
           {this.state.tagList.map((item, index) => <View className='tag' key={index}><AtTag name={item.name} type='primary' active={item.active} circle onClick={this.onClick.bind(this)}>{item.name}</AtTag></View>)}
         </ScrollView>
         <Waterfall />
-
-
-
       </View>
     )
   }

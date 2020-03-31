@@ -186,6 +186,7 @@ page {
 //  border-radius: 5px;
 //
 //}
+
 .radio{
   border: 8px solid black;
   height: 250px;
@@ -197,12 +198,19 @@ page {
   font-size: small;
   float: left;
   margin: 50px;
+  .at-radio__option-container{
+    height: 100%;
+    display: flex;
+  }
   .at-radio__title{
     font-size:25px;
-    //display:flex;
+    display:flex;
     font:Roboto;
     font-weight: bold;
     word-break: break-word;
+    //align-items: center;
+    //justify-content: center;
+    //text-align: center;
 
   }
   .at-radio__option{

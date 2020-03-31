@@ -160,6 +160,59 @@ export default class Add extends Component<{}, PageState> {
         {/*{this.renderForm()}*/}
         {this.renderCategoryList()}
         <View className='radio-group'>
+          <text>\n</text>
+          <ProductTitle title= 'Sub Category' />
+          <AtRadio
+            className='radio'
+            options={[
+              { label: '沙发', value: 'option1' },
+            ]}
+            value={this.state.value}
+            onClick={this.handleChange.bind(this)}
+          />
+          <AtRadio
+            className='radio'
+            options={[
+              { label: 'GOOD', value: 'option2'},
+            ]}
+            value={this.state.value}
+            onClick={this.handleChange.bind(this)}
+          />
+          <AtRadio
+            className='radio'
+            options={[
+              { label: 'FINE', value: 'option3',},
+            ]}
+            value={this.state.value}
+            onClick={this.handleChange.bind(this)}
+          />
+          <AtRadio
+            className='radio'
+            options={[
+              { label: 'GOOD', value: 'option2'},
+            ]}
+            value={this.state.value}
+            onClick={this.handleChange.bind(this)}
+          />
+          <AtRadio
+            className='radio'
+            options={[
+              { label: 'FINE', value: 'option3',},
+            ]}
+            value={this.state.value}
+            onClick={this.handleChange.bind(this)}
+          />
+          <AtRadio
+            className='radio'
+            options={[
+              { label: 'FINE', value: 'option3',},
+            ]}
+            value={this.state.value}
+            onClick={this.handleChange.bind(this)}
+          />
+        </View>
+        <View className='radio-group'>
+          <ProductTitle title='Condition' />
           <AtRadio
             className='radio'
             options={[

@@ -1,20 +1,21 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import { AtRadio, AtButton, AtGrid } from 'taro-ui'
+import { AtInput, AtTextarea, AtListItem, AtActionSheet, AtActionSheetItem, AtButton, AtGrid, AtCheckbox, AtCalendar } from 'taro-ui'
 
 // import graphql from '../../api/graphql'
 import { ProductTitle, UploadImage } from '../../components'
 import graphql from '../../api/graphql'
-import { createProduct } from "../../api/gpl";
+import {category, createProduct} from "../../api/gpl";
 
-import './createPost.scss'
+import './createPost5.scss'
 
 type PageState = {
   products: {
     title: string,
     description: string,
     expiryTime: string,
-    category: string,
+    price:string,
+    originalPrice:string,
     // categoryId: string,
     // categoryName: string
   },
@@ -23,7 +24,8 @@ type PageState = {
     id: string,
     image: string,
   }>,
-  showCategory: boolean
+  showCategory: boolean,
+  checkedList: string
 }
 
 export default class Add extends Component<{}, PageState> {
@@ -34,7 +36,6 @@ export default class Add extends Component<{}, PageState> {
         title: '',
         description: '',
         expiryTime: '2020-03-15T00:48:09Z',
-        category: '',
         // categoryId: '',
         // categoryName: ''
       },
@@ -44,8 +45,18 @@ export default class Add extends Component<{}, PageState> {
         {name: 'Fashion', id: '3', image:require('./../../static/home/home_hospital.png')},
         {name: 'HomeAppliance', id: '4', image:require('./../../static/home/home_hospital.png')},
       ],
-      showCategory: false
+      showCategory: false,
+      checkedList: ['list1']
+
     }
+    this.checkboxOption = [{
+      value: 'list1',
+      label: 'Pick Up',
+      desc: '部分提供送货上门'
+    },{
+      value: 'list2',
+      label: 'Delievery'
+    },]
   }
 
   componentDidMount() {
@@ -70,9 +81,9 @@ export default class Add extends Component<{}, PageState> {
     })
     return value
   }
-  handleChange (value) {
+  handleDeliveryChange (value) {
     this.setState({
-      products: {...this.state.products, category:value}
+      checkedList: value
     })
   }
   handleChangeDescription = (event) => {
@@ -105,41 +116,57 @@ export default class Add extends Component<{}, PageState> {
     }
   }
 
-
-  // renderCategory = () => {
-  //   const { categoryList, showCategory } = this.state
-  //   console.log(categoryList)
-  //   return (
-  //     <View>
-  //       <AtActionSheet isOpened={showCategory}>
-  //         {categoryList && categoryList.map((item) => {
-  //           return (
-  //             <AtActionSheetItem key={item.id} onClick={() => {
-  //               this.handleChangeType(item)
-  //             }}
-  //             >{item.name}{console.log(item.name)}</AtActionSheetItem>
-  //           )
-  //         })}
-  //       </AtActionSheet>
-  //     </View>
-  //   )
-  // }
-  renderCategoryList = () => {
-    const { categoryList } = this.state
+  renderForm = () => {
+    const { products, checkedList } = this.state
     return (
-      <AtRadio className='grid' hasBorder={false} columnNum={2} onClick={(item: any) => { Taro.navigateTo({ url: `/pages/type/type?id=${item.id}&name=${item.value}&type=category` }) }} data={categoryList.map((item) => {
-        return ({
-          image: item.image,
-          value: item.name,
-          id: item.id
-        })
-      })}
-      />
+      <View>
+        <View className='section'>
+          <Text>\n</Text>
+          <ProductTitle title='Price' />
+          <AtInput
+            className='at-input'
+            name='title'
+            title='价格'
+            type='text'
+            placeholder='selling price'
+            value={products.title}
+            onChange={this.handleChangeName.bind(this)}
+          />
+          <AtInput
+            className='at-input-original'
+            name='title'
+            title='原价'
+            type='text'
+            placeholder='original price'
+            value={products.title}
+            onChange={this.handleChangeName.bind(this)}
+          />
+          <Text>\n</Text>
+
+        </View>
+        <View className='section'>
+          <ProductTitle title='Delivery' />
+          <Text>\n</Text>
+          <AtCheckbox
+            options={this.checkboxOption}
+            selectedList={checkedList}
+            onChange={this.handleDeliveryChange.bind(this)}
+          />
+        </View>
+        <View className='section'>
+          <ProductTitle title='Deadline' />
+          <AtCalendar />
+          <Text>\n</Text>
+        </View>
+        <View className='section'>
+          <AtButton type='primary' onClick={this.handleInput.bind(this)}>提交</AtButton>
+        </View>
+      </View>
     )
   }
   createNext = async (callback) => {
     Taro.navigateTo({
-      url: "/pages/createPost2/createPost2"
+      url: "/pages/createPost4/createPost4"
     })
   }
   cancel = () => {
@@ -156,55 +183,13 @@ export default class Add extends Component<{}, PageState> {
       }
     })
   }
+
   render() {
     return (
       <View className='add'>
-        <text>\n</text>
-        <ProductTitle title='Category' />
-        {/*{this.renderForm()}*/}
-        {/*{this.renderCategoryList()}*/}
-        <AtRadio
-          className='radio'
-          options={[
-            { label: 'Furniture', value: 'Furniture' },
-          ]}
-          value={this.state.products.category}
-          onClick={this.handleChange.bind(this)}
-        />
-        <AtRadio
-          className='radio'
-          options={[
-            { label: 'Electronic', value: 'Electronic'},
-          ]}
-          value={this.state.products.category}
-          onClick={this.handleChange.bind(this)}
-        />
-        <AtRadio
-          className='radio'
-          options={[
-            { label: 'Fashion', value: 'Fashion',},
-          ]}
-          value={this.state.products.category}
-          onClick={this.handleChange.bind(this)}
-        />
-        <AtRadio
-          className='radio'
-          options={[
-            { label: 'Home Appliance', value: 'Home Appliance'}
-          ]}
-          value={this.state.products.category}
-          onClick={this.handleChange.bind(this)}
-        />
-
-        {/*<View className="btn-group">*/}
-        {/*  <AtButton className="button">Button</AtButton>*/}
-        {/*  <AtButton className="button">Button</AtButton>*/}
-        {/*  <AtButton className="button">Button</AtButton>*/}
-        {/*  <AtButton className="button">Button</AtButton>*/}
-        {/*</View>*/}
+        {this.renderForm()}
         <AtButton type='primary' className='nextButton' circle=true onClick={this.createNext}> Next </AtButton>
         <AtButton type= 'secondary' className='cancelButton' circle=true onClick={this.cancel}> cancel </AtButton>
-
       </View>
     )
   }
