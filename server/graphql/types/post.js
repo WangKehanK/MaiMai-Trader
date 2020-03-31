@@ -82,7 +82,7 @@ const typeDefs = gql`
         description: String
         category: Category
         condition: Condition
-        image: [String!]
+        image: [String]
         delieveryMethod: DelieveryMethodInput
         price: PriceInput
         userId: ID

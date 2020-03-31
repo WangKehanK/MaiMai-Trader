@@ -4,28 +4,31 @@
 
 > Aiming to solve the real-world problem that international students has no place to sell their second-hand products, especially furniture.
 
+## Frontend Page Structure
+```
+├─pages
+│  ├─home # 首页-home page, posting button, products listing
+│  ├─index # 分享页面 - share page
+│  ├─ucenter # 个人 - profile page
+│  └─post # 商品细节页面 - products detail page
+```
+
 ## Prerequisites
 ### [Taro.js](https://github.com/NervJS/taro)
 ```
 # To Install: 
 
-# use npm install CLI
 $ npm install -g @tarojs/cli
-# OR use yarn install CLI
-$ yarn global add @tarojs/cli
 
 # To run:
 
-# yarn
-$ yarn dev:weapp
-$ yarn build:weapp
-# npm script
 $ npm run dev:weapp
 $ npm run build:weapp
 ```
-
 ### [Express.js](https://spring.io/projects/spring-boot)
 ### [WeChat Mini-app Debuging Tool](https://developers.weixin.qq.com/miniprogram/en/dev/framework/)
+### [GraphQL](https://graphql.org/learn/)
+### [Scrapy](https://docs.scrapy.org/en/latest/index.html)
 
 ## Author
 
@@ -35,3 +38,9 @@ $ npm run build:weapp
 * Yizhou Mao [@uohziyoam](https://github.com/uohziyoam)
 * Naiwen Xu [@xnw0220](https://github.com/xnw0220)
 * Yian Zhao [@uni-nicoz](https://github.com/uni-nicoz)
+
+## Wiki
+
+* [Discord](https://discord.gg/Ea9PXHH)
+* [Google Drive](https://drive.google.com/drive/folders/1gXx-r_M86RXGsrVy5znvcgBtc5U8airV?usp=sharing)
+* [Figma](https://www.figma.com/file/ugGUXT1HEy2269U9JTsqOH/MMT?node-id=0%3A1)
