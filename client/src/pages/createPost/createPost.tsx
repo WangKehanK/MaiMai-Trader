@@ -40,9 +40,9 @@ export default class Add extends Component<{}, PageState> {
       },
       categoryList: [
         {name: 'Furniture', id: '1', image:require('./../../static/home/home_hospital.png')},
-        {name: 'ElectronicDevice', id: '2', image:require('./../../static/home/home_hospital.png')},
+        {name: 'Electronic Device', id: '2', image:require('./../../static/home/home_hospital.png')},
         {name: 'Fashion', id: '3', image:require('./../../static/home/home_hospital.png')},
-        {name: 'HomeAppliance', id: '4', image:require('./../../static/home/home_hospital.png')},
+        {name: 'Home Appliance', id: '4', image:require('./../../static/home/home_hospital.png')},
       ],
       showCategory: false
     }
@@ -64,66 +64,12 @@ export default class Add extends Component<{}, PageState> {
   //   })
   // }
 
-  handleChangeName = (value) => {
-    this.setState({
-      products: { ...this.state.products, title: value }
-    })
-    return value
-  }
-  handleChange (value) {
+  handleChangeCategory (value) {
     this.setState({
       products: {...this.state.products, category:value}
     })
   }
-  handleChangeDescription = (event) => {
-    this.setState({
-      products: { ...this.state.products, description: event.target.value }
-    })
-  }
 
-  handleChangeType = (item) => {
-    this.setState({
-      products: { ...this.state.products, categoryId: item.id, categoryName: item.name },
-      showCategory: false
-    })
-  }
-
-  handleInput = async () => {
-    const { products } = this.state
-    console.log(products)
-    console.log(createProduct)
-    const res = await graphql.mutate({ mutation: createProduct, variables: products })
-    // const res = await graphql.mutate({ mutation: gql`mutation {createPost(post: {description: "dfsf", expiryTime:"2020-03-15T00:48:09Z"})}`} );
-
-    if (res.data.createProduct) {
-      Taro.showToast({
-        title: '添加成功',
-        icon: 'success',
-        duration: 2000
-      })
-      Taro.navigateBack()
-    }
-  }
-
-
-  // renderCategory = () => {
-  //   const { categoryList, showCategory } = this.state
-  //   console.log(categoryList)
-  //   return (
-  //     <View>
-  //       <AtActionSheet isOpened={showCategory}>
-  //         {categoryList && categoryList.map((item) => {
-  //           return (
-  //             <AtActionSheetItem key={item.id} onClick={() => {
-  //               this.handleChangeType(item)
-  //             }}
-  //             >{item.name}{console.log(item.name)}</AtActionSheetItem>
-  //           )
-  //         })}
-  //       </AtActionSheet>
-  //     </View>
-  //   )
-  // }
   renderCategoryList = () => {
     const { categoryList } = this.state
     return (
@@ -137,9 +83,9 @@ export default class Add extends Component<{}, PageState> {
       />
     )
   }
-  createNext = async (callback) => {
+  createNext = (category) => {
     Taro.navigateTo({
-      url: "/pages/createPost2/createPost2"
+      url: `/pages/createPost2/createPost2?category=${category}`
     })
   }
   cancel = () => {
@@ -161,49 +107,23 @@ export default class Add extends Component<{}, PageState> {
       <View className='add'>
         <text>\n</text>
         <ProductTitle title='Category' />
-        {/*{this.renderForm()}*/}
-        {/*{this.renderCategoryList()}*/}
-        <AtRadio
-          className='radio'
-          options={[
-            { label: 'Furniture', value: 'Furniture' },
-          ]}
-          value={this.state.products.category}
-          onClick={this.handleChange.bind(this)}
-        />
-        <AtRadio
-          className='radio'
-          options={[
-            { label: 'Electronic', value: 'Electronic'},
-          ]}
-          value={this.state.products.category}
-          onClick={this.handleChange.bind(this)}
-        />
-        <AtRadio
-          className='radio'
-          options={[
-            { label: 'Fashion', value: 'Fashion',},
-          ]}
-          value={this.state.products.category}
-          onClick={this.handleChange.bind(this)}
-        />
-        <AtRadio
-          className='radio'
-          options={[
-            { label: 'Home Appliance', value: 'Home Appliance'}
-          ]}
-          value={this.state.products.category}
-          onClick={this.handleChange.bind(this)}
-        />
-
-        {/*<View className="btn-group">*/}
-        {/*  <AtButton className="button">Button</AtButton>*/}
-        {/*  <AtButton className="button">Button</AtButton>*/}
-        {/*  <AtButton className="button">Button</AtButton>*/}
-        {/*  <AtButton className="button">Button</AtButton>*/}
-        {/*</View>*/}
-        <AtButton type='primary' className='nextButton' circle=true onClick={this.createNext}> Next </AtButton>
-        <AtButton type= 'secondary' className='cancelButton' circle=true onClick={this.cancel}> cancel </AtButton>
+        <View className='category-group'>
+          {
+            this.state.categoryList.map((item) => {
+              return <AtRadio
+                className='radio'
+                key={item.id}
+                options={[
+                  {label: item.name, value: item.name}
+                ]}
+                value={this.state.products.category}
+                onClick={this.handleChangeCategory.bind(this)}
+              />
+            })
+          }
+        </View>
+        <AtButton type='primary' className='nextButton' circle= true onClick={this.createNext.bind(this, this.state.products.category)}> Next </AtButton>
+        <AtButton type= 'secondary' className='cancelButton' circle= true onClick={this.cancel}> cancel </AtButton>
 
       </View>
     )
