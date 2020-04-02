@@ -14,6 +14,7 @@ type PageState = {
     title: string,
     description: string,
     expiryTime: string,
+    category: string,
     // categoryId: string,
     // categoryName: string
   },
@@ -33,6 +34,7 @@ export default class Add extends Component<{}, PageState> {
         title: '',
         description: '',
         expiryTime: '2020-03-15T00:48:09Z',
+        category: this.props.category,
         // categoryId: '',
         // categoryName: ''
       },
@@ -47,6 +49,8 @@ export default class Add extends Component<{}, PageState> {
   }
 
   componentDidMount() {
+    let params = this.$router.params.category
+    console.log("params:", params)
     // this.getCategory()
   }
 

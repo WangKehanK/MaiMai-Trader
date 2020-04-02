@@ -19,7 +19,6 @@ class Homeitem extends Component {
     itemText: ''
   }
   componentWillReceiveProps (nextProps) {
-    console.log(this.props, nextProps)
   }
 
   componentWillUnmount () { }
