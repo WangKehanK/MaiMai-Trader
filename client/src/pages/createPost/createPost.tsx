@@ -1,8 +1,7 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import { AtRadio, AtButton, AtGrid } from 'taro-ui'
+import { AtRadio, AtButton } from 'taro-ui'
 
-// import graphql from '../../api/graphql'
 import { ProductTitle } from '../../components'
 import graphql from '../../api/graphql'
 import { createProduct } from "../../api/gpl";

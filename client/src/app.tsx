@@ -25,7 +25,7 @@ class App extends Component {
    */
   config: Config = {
     pages: ["pages/home/home",
-            "pages/index/index",
+            // "pages/index/index",
             "pages/post/post",
             "pages/ucenter/ucenter",
             "pages/createPost/createPost",

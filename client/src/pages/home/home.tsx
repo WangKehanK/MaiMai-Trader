@@ -1,7 +1,7 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import {ScrollView, View} from '@tarojs/components'
 import {AtSearchBar, AtTag} from "taro-ui";
-import { Homeitem, Waterfall } from './../../components';
+import { Homeitem } from './../../components';
 
 import {
   VirtualListDataManager,
@@ -31,7 +31,7 @@ function getTopic(page: number) {
 }
 
 export default class Home extends Component {
-  
+
   constructor() {
     super(...arguments)
     this.state = {
@@ -68,7 +68,8 @@ export default class Home extends Component {
 
   }
   config: Config = {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '首页',
+    disableScroll:true
   }
 
   toSearch = () => {
@@ -235,88 +236,90 @@ export default class Home extends Component {
     });
     return (
       <View className='home'>
-        {/* <Waterfall /> */}
         <View className='page column-page'>
-          <View onClick={this.toSearch.bind(this)}>
-            <AtSearchBar
-              actionName='搜一下'
-              disabled={true}
-              value={keyword}
-              onChange={this.toSearch.bind(this)}
-            />
-          </View>
-          <View className='index-top-view-second'>
-            {
-              this.state.categoryList.map((item) => {
-                return <Homeitem
-                  key={item.id}
-                  itemText={item.name}
-                  imageSource={item.imageSource}
-                  // onItemClick={item.onItemClick}
-                />
-              })
-            }
-          </View>
-          <ScrollView scrollX className='tag-list'>
-            {this.state.tagList.map((item) => <View className='tag' key={item.id}>
-              <AtTag name={item.name} type='primary' active={item.active} circle onClick={this.onTagClick.bind(this)}>{item.name}</AtTag></View>)}
-          </ScrollView>
-        <TaroList
-          onRefresh={this.handleRefresh}
-          onLoadMore={this.handleLoadMore}
-          onVirtualListInit={this.handleInit}
-          virtual
-          height='100vh'
-          dataManager={this.dataManager}
-        >
-          {list.map(item =>
-            item.item[0].type === 'loadMore' ? (
-              <View className='loadStatus' style={item.style}>
-                加载更多...
-              </View>
-            ) : item.item[0].type === 'ended' ? (
-              <View className='loadStatus' style={item.style}>
-                没有更多了
-              </View>
-            ) : item.item[0].type === 'loading' ? (
-              <View className='loadStatus' style={item.style}>
-                加载中...
-              </View>
-            ) : (
-              <View
-                style={{
-                  ...item.style
-                }}
-                key={item.index}
-                className='topic-column'
-              >
-                {item.item.map((topic, k) => (
-                  <View className='topic-item' key={topic.id}>
-                    <View className='topic-item-inner'>
-                      <View
-                        style={{
-                          background: topic.avatarUrl
-                        }}
-                        className='topic-item__avatar'
-                      />
-                      <View className='topic-item__main'>
-                        <View className='topic-item__title'>
-                          #{item.index * 2 + k} - {topic.title}
+          <View>
+          <TaroList
+            enableBackToTop
+            onRefresh={this.handleRefresh}
+            onLoadMore={this.handleLoadMore}
+            onVirtualListInit={this.handleInit}
+            virtual
+            height='100vh'
+            dataManager={this.dataManager}
+          >
+            <View onClick={this.toSearch.bind(this)}>
+              <AtSearchBar
+                actionName='搜一下'
+                disabled={true}
+                value={keyword}
+                onChange={this.toSearch.bind(this)}
+              />
+            </View>
+            <View className='index-top-view-second'>
+              {
+                this.state.categoryList.map((item) => {
+                  return <Homeitem
+                    key={item.id}
+                    itemText={item.name}
+                    imageSource={item.imageSource}
+                    // onItemClick={item.onItemClick}
+                  />
+                })
+              }
+            </View>
+            <ScrollView scrollX className='tag-list'>
+              {this.state.tagList.map((item) => <View className='tag' key={item.id}>
+                <AtTag name={item.name} type='primary' active={item.active} circle onClick={this.onTagClick.bind(this)}>{item.name}</AtTag></View>)}
+            </ScrollView>
+
+            {list.map(item =>
+              item.item[0].type === 'loadMore' ? (
+                <View className='loadStatus' style={item.style}>
+                  加载更多...
+                </View>
+              ) : item.item[0].type === 'ended' ? (
+                <View className='loadStatus' style={item.style}>
+                  没有更多了
+                </View>
+              ) : item.item[0].type === 'loading' ? (
+                <View className='loadStatus' style={item.style}>
+                  加载中...
+                </View>
+              ) : (
+                <View
+                  style={{
+                    ...item.style
+                  }}
+                  key={item.index}
+                  className='topic-column'
+                  style='z-index=-1'
+                >
+                  {item.item.map((topic, k) => (
+                    <View className='topic-item' key={topic.id}>
+                      <View className='topic-item-inner'>
+                        <View
+                          style={{
+                            background: topic.avatarUrl
+                          }}
+                          className='topic-item__avatar'
+                        />
+                        <View className='topic-item__main'>
+                          <View className='topic-item__title'>
+                            #{item.index * 2 + k} - {topic.title}
+                          </View>
+                          <View className='topic-item__price'>{topic.author.loginname}</View>
                         </View>
-                        <View>{topic.author.loginname}</View>
                       </View>
                     </View>
-                  </View>
-                ))}
-              </View>
-            )
-          )}
-        </TaroList>
+                  ))}
+                </View>
+              )
+            )}
+          </TaroList>
+          </View>
       </View>
       </View>
     )
   }
-
-
 }
 

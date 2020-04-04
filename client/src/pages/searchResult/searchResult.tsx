@@ -2,7 +2,7 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import {ScrollView, View} from '@tarojs/components'
 import {AtButton, AtFab, AtIcon, AtSearchBar, AtTag} from "taro-ui";
 
-import { Homeitem, Waterfall } from './../../components';
+import { Homeitem } from './../../components';
 
 
 import './searchResult.scss'
@@ -101,9 +101,9 @@ export default class Home extends Component {
     return (
       <View className='searchResult'>
         <ScrollView scrollX className='tag-list'>
-          {this.state.tagList.map((item, index) => <View className='tag' key={index}><AtTag name={item.name} type='primary' active={item.active} circle onClick={this.onClick.bind(this)}>{item.name}</AtTag></View>)}
+          {this.state.tagList.map((item) => <View className='tag' key={item.id}><AtTag name={item.name} type='primary' active={item.active} circle onClick={this.onClick.bind(this)}>{item.name}</AtTag></View>)}
         </ScrollView>
-        <Waterfall />
+        {/*<Waterfall />*/}
 
         <AtFab className='Fab'>
           <Text className='at-fab__icon at-icon at-icon-menu'>Filter</Text>
