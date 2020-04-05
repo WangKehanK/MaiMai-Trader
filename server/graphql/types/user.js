@@ -77,12 +77,15 @@ const typeDefs = gql`
         userName: String # WeChat nickName
         openId: ID # WeChat openId
         unionId: ID # WeChat unionId
+        code: ID # WeChat login Code
         gender: Gender
         locale: LocaleInput
         school: SchoolInput
         avatar: String
         contact: ContactInput
     }
+
+
 `
 
 export default typeDefs;
