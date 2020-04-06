@@ -3,7 +3,7 @@ import ApolloClient from 'apollo-boost';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
 const fetch = (url, { body: data, ...fetchOptions }) => {
-  return Taro.request({ url, data, ...fetchOptions, dataType: 'text' })
+  return Taro.request({ url, data, ...fetchOptions, header: {'content-type': 'application/json', token: 'a' },dataType: 'text' })
     .then((res) => {
       res.text = () => Promise.resolve(res.data)
       console.log(res.data)

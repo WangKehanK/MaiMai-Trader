@@ -15,3 +15,14 @@ export const createProduct = gql`
     createPost(post: {title: $title, description: $description, expiryTime:"2020-03-15T00:48:09Z"})
   }
 `
+
+export const login = gql`
+  mutation authenticate($code: ID, $nickName: String){
+    authenticate(user: {
+      code: $code
+      userName: $nickName
+    }) {
+      token
+    }
+  }
+`

@@ -1,18 +1,43 @@
-import Taro from '@tarojs/taro'
-import { View, Image } from '@tarojs/components'
+import Taro, { useEffect } from '@tarojs/taro'
+import { View } from '@tarojs/components'
+import { useDispatch, useSelector } from '@tarojs/redux'
 
-// import './mine.scss'
-// import avatar from '../../images/avatar.png'
+import { Header, Footer } from '../../components'
+import './ucenter.scss'
+import { SET_LOGIN_INFO } from '../../constants'
 
 export default function Mine() {
+  const dispatch = useDispatch()
+  const nickName = useSelector(state => state.user.nickName)
+
+  const isLogged = !!nickName
+
+  useEffect(() => {
+    async function getStorage() {
+      try {
+        const { data } = await Taro.getStorage({ key: 'userInfo' })
+
+        const { nickName, avatar} = data
+
+        // 更新 Redux Store 数据
+        dispatch({
+          type: SET_LOGIN_INFO,
+          payload: { nickName, avatar },
+        })
+      } catch (err) {
+        console.log('getStorage ERR: ', err)
+      }
+    }
+
+    if (!isLogged) {
+      getStorage()
+    }
+  })
+
   return (
     <View className="mine">
-      <View>
-        {/* <Image src={avatar} className="mine-avatar" /> */}
-        <View className="mine-nickName">图雀酱</View>
-        <View className="mine-username">tuture</View>
-      </View>
-      <View className="mine-footer">From 图雀社区 with Love ❤</View>
+      <Header />
+      <Footer />
     </View>
   )
 }
