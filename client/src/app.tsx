@@ -4,7 +4,7 @@ import { Provider } from "@tarojs/redux";
 
 import Index from "./pages/index";
 
-import configStore from "./store";
+import { store } from './store/store'
 import "./app.scss";
 
 // 如果需要在 h5 环境中开启 React Devtools
@@ -13,7 +13,6 @@ import "./app.scss";
 //   require('nerv-devtools')
 // }
 
-const store = configStore();
 
 class App extends Component {
   /**
@@ -68,7 +67,8 @@ class App extends Component {
 
   componentDidMount() {}
 
-  componentDidShow() {}
+  componentDidShow() {
+  }
 
   componentDidHide() {}
 

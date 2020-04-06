@@ -19,6 +19,7 @@ type LoadStatus =
   | 'refreshing'
   | 'noData';
 
+
 const HEIGHT = '410rpx';
 function getTopic(page: number) {
   return Taro.request({
