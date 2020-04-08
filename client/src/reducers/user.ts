@@ -14,6 +14,7 @@ const INITIAL_STATE = {
   isLogin:false,
   isOpened: false,
   loginStatus: LOGIN_NORMAL,
+  openID: '',
 }
 
 export default function user(state = INITIAL_STATE, action) {

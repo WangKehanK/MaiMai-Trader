@@ -11,8 +11,8 @@ export const category = gql`
 `
 
 export const createProduct = gql`
-  mutation CreatePost($title: String, $description: String){
-    createPost(post: {title: $title, description: $description, expiryTime:"2020-03-15T00:48:09Z"})
+  mutation CreatePost($title: String, $description: String, $category: Category){
+    createPost(post: {title: $title, description: $description, category: $category,expiryTime:"2020-03-15T00:48:09Z"})
   }
 `
 

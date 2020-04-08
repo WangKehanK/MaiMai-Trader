@@ -4,7 +4,7 @@ import { AtRadio, AtButton } from 'taro-ui'
 
 import { ProductTitle } from '../../components'
 import graphql from '../../api/graphql'
-import { createProduct } from "../../api/gpl";
+import {category, createProduct} from "../../api/gpl";
 
 import './createPost2.scss'
 
@@ -33,7 +33,7 @@ export default class Add extends Component<{}, PageState> {
         title: '',
         description: '',
         expiryTime: '2020-03-15T00:48:09Z',
-        category: this.props.category,
+        category: this.$router.params.category,
         // categoryId: '',
         // categoryName: ''
       },
@@ -48,9 +48,11 @@ export default class Add extends Component<{}, PageState> {
   }
 
   componentDidMount() {
+  }
+  componentWillMount() {
+    //通过路由传值
     let params = this.$router.params.category
     console.log("params:", params)
-    // this.getCategory()
   }
 
   config: Config = {

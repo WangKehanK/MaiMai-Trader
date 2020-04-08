@@ -23,7 +23,7 @@ export default function WeappLoginButton(props) {
           console.log(result)
           await Taro.setStorage({
             key: 'userInfo',
-            data: { avatar: avatarUrl, nickName },
+            data: { avatar: avatarUrl, nickName, openID:result.data.authenticate.token},
           })
         }
       }
