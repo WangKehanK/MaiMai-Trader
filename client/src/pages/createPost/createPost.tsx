@@ -8,14 +8,28 @@ import { createProduct } from "../../api/gpl";
 
 import './createPost.scss'
 
+async function getOpenID() {
+  const {data} = await Taro.getStorage({key: "userInfo"})
+  const { openID } = data
+  return openID
+}
+let openID = getOpenID()
+
+
 type PageState = {
   products: {
     title: string,
     description: string,
-    expiryTime: string,
     category: string,
-    // categoryId: string,
-    // categoryName: string
+    condition: string,
+    image: [],
+    delieveryMethod: string,
+    price: number,
+    userId: string,
+    tags: [],
+    expiryTime: string,
+    city: string,
+    school: [],
   },
   categoryList: Array<{
     name: string,
@@ -34,6 +48,7 @@ export default class Add extends Component<{}, PageState> {
         description: '',
         expiryTime: '2020-03-15T00:48:09Z',
         category: '',
+        userId: Taro.getStorageSync('userInfo').openID,
         // categoryId: '',
         // categoryName: ''
       },
@@ -46,9 +61,25 @@ export default class Add extends Component<{}, PageState> {
       showCategory: false
     }
   }
+  componentDidShow(){
+    //如果没登录，乖乖给我去登录
+    const token = Taro.getStorageSync('userInfo')
+    if(!!!token) {
+      Taro.switchTab({url: '/pages/ucenter/ucenter'}).then(
+        Taro.showToast({
+          title: '请登录',
+          icon: "loading",
+          duration: 2000
+        })
+      )
+      return
+    }
+  }
 
   componentDidMount() {
     // this.getCategory()
+  }
+  componentWillMount() {
   }
 
   config: Config = {
@@ -69,20 +100,9 @@ export default class Add extends Component<{}, PageState> {
     })
   }
 
-  renderCategoryList = () => {
-    const { categoryList } = this.state
-    return (
-      <AtRadio className='grid' hasBorder={false} columnNum={2} onClick={(item: any) => { Taro.navigateTo({ url: `/pages/type/type?id=${item.id}&name=${item.value}&type=category` }) }} data={categoryList.map((item) => {
-        return ({
-          image: item.image,
-          value: item.name,
-          id: item.id
-        })
-      })}
-      />
-    )
-  }
-  createNext = (category) => {
+  createNext = async (category) => {
+    const result = await graphql.mutate({mutation: createProduct , variables: {category: category}})
+    console.log(result)
     Taro.navigateTo({
       url: `/pages/createPost2/createPost2?category=${category}`
     })
