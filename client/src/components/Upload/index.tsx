@@ -17,7 +17,7 @@ export default class UploadImage extends Component<any> {
 
   uploadImg = () => {
     let that = this;
-    let max = 1;
+    let max = 9;
     let imgFilePaths;
     let upLength
     Taro.chooseImage({

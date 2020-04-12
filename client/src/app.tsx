@@ -4,8 +4,7 @@ import { Provider } from "@tarojs/redux";
 
 import Index from "./pages/index";
 
-import configStore from "./store";
-
+import { store } from './store/store'
 import "./app.scss";
 
 // 如果需要在 h5 环境中开启 React Devtools
@@ -14,7 +13,6 @@ import "./app.scss";
 //   require('nerv-devtools')
 // }
 
-const store = configStore();
 
 class App extends Component {
   /**
@@ -26,10 +24,17 @@ class App extends Component {
    */
   config: Config = {
     pages: ["pages/home/home",
-            "pages/index/index",
+            // "pages/index/index",
             "pages/post/post",
             "pages/ucenter/ucenter",
-            ],
+            "pages/createPost/createPost",
+            "pages/createPost2/createPost2",
+            "pages/createPost3/createPost3",
+            "pages/createPost4/createPost4",
+            "pages/createPost5/createPost5",
+            "pages/search/search",
+            "pages/searchResult/searchResult",
+    ],
     window: {
       backgroundTextStyle: "light",
       navigationBarBackgroundColor: "#fff",
@@ -47,9 +52,14 @@ class App extends Component {
         "selectedIconPath": './static/images/home@selected.png',
         "text": "首页"
       }, {
+        "pagePath": "pages/createPost/createPost",
+        "iconPath": './static/images/plus-square.png',
+        "selectedIconPath": './static/images/plus-square@selected.png',
+        "text": "添加"
+      }, {
         "pagePath": 'pages/ucenter/ucenter',
-        "iconPath": './static/images/my.png',
-        "selectedIconPath": './static/images/my@selected.png',
+        "iconPath": './static/images/user.png',
+        "selectedIconPath": './static/images/user@selected.png',
         "text": "个人"
       }],
     }
@@ -57,7 +67,8 @@ class App extends Component {
 
   componentDidMount() {}
 
-  componentDidShow() {}
+  componentDidShow() {
+  }
 
   componentDidHide() {}
 

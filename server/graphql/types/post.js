@@ -2,12 +2,15 @@ import gql from 'graphql-tag';
 
 const typeDefs = gql`
     extend type Mutation {
-        createPost(post: PostInput!): Post
+        createPost(post: PostInput!): Boolean
+        createPostDraft(post: PostInput!): Boolean
+        updatePost(post: PostInput!): Boolean
+        updatePostDraft(post: PostInput!): Boolean
     }
 
     extend type Query {
         getPostById(postId: ID!): Post,
-        getPosts: [Post]
+        getPosts(limit: Int!, offset: Int!, filters: PostFilters!): [Post]
     }
 
     type Post {
@@ -20,6 +23,7 @@ const typeDefs = gql`
         delieveryMethod: DelieveryMethod
         price: Price
         user: User
+        tags: [String]
     }
 
     type Price {
@@ -28,7 +32,7 @@ const typeDefs = gql`
     }
 
     type DelieveryMethod {
-        type: String!
+        deliveryType: DeliveryType!
         address: String!
         carrier: String
     }
@@ -47,26 +51,60 @@ const typeDefs = gql`
         HomeAppliance
     }
 
+    enum DeliveryType {
+        delievery,
+        pickup
+    }
+
+    enum Order {
+        priceAscending,
+        priceDescending,
+        ratingAscending,
+        ratingDescending,
+        distanceAscending,
+        distanceDescending
+    }
+
     input PriceInput {
         offerPrice: Float
         originalPrice: Float
     }
 
     input DelieveryMethodInput {
-        type: String
+        deliveryType: DeliveryType
         address: String
         carrier: String
     }
 
     input PostInput {
-        title: String!
-        description: String!
-        category: Category!
-        condition: Condition!
-        image: [String!]!
-        delieveryMethod: DelieveryMethodInput!
-        price: PriceInput!
-        user: UserInput!
+        postId: ID
+        title: String
+        description: String
+        category: Category
+        condition: Condition
+        image: [String]
+        delieveryMethod: DelieveryMethodInput
+        price: PriceInput
+        userId: ID
+        tags: [String]
+        orderBy: Order
+        expiryTime: Date
+        city: String
+        school: [String]
+    }
+
+    input PostFilters {
+        category: Category
+        condition: Condition
+        delieveryMethod: DelieveryMethodInput
+        price: PriceInput
+        userId: ID
+        tags: [String]
+        orderBy: Order
+        expiryTime: Date
+        text: String
+        city: String
+        school: [String]
     }
 `
 

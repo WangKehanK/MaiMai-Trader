@@ -1,77 +1,65 @@
 import mongoose from 'mongoose';
+import mongoosePaginate from "mongoose-paginate-v2";
+import { User } from "./UserModel.js";
+
 const Schema = mongoose.Schema;
 
 const DeliveryMethod = {
-    type: {
-        type: String,
-        required: true
+    deliveryType: {
+        type: String
     },
     address: {
-        type: String,
-        required: true
+        type: String
     },
     carrier: {
-        type: String,
-        required: true
+        type: String
     }
 };
 
 const Price = {
     offerPrice: {
-        type: Number,
-        required: true
+        type: Number
     },
     originalPrice: {
-        type: Number,
-        required: false
+        type: Number
     }
 };
 
-const User = {
-    userid: {
-        type: String,
-        required: true
+const PostSchema = new Schema({
+    isDraft: {
+        type: Boolean
     },
-    userName: {
-        type: String,
-        required: true
-    },
-    school: {
-        type: String,
-        required: true
-    }
-};
-
-
-const Poster = new Schema({
     postId: {
-        type: String,
+        type: String
     },
     title: {
-        type: String,
-        required: true
+        type: String
     },
     description: {
-        type: String,
-        required: true
+        type: String
     },
     category: {
-        type: String,
-        required: true
+        type: String
     },
     condition: {
-        type: String,
-        required: false
+        type: String
     },
     image: {
+        type: [String]
+    },
+    tags: {
         type: [String],
-        required: true
     },
     deliveryMethod: DeliveryMethod,
     price: Price,
-    user: User
+    user: User,
+    userId: String,
+    createdTime: Date,
+    expiryTime: Date
 });
 
-const Post = mongoose.model('Poster', Poster, "posts");
+PostSchema.plugin(mongoosePaginate)
+
+const Post = mongoose.model('Poster', PostSchema, "posts");
 
 export { Post };
