@@ -15,7 +15,7 @@ SPIDER_MODULES = ['post.spiders']
 NEWSPIDER_MODULE = 'post.spiders'
 
 # MongoDB
-MONGO_URL = "mongodb+srv://<username>:<password>@maimaidb-j5hf5.mongodb.net/test?retryWrites=true&w=majority"
+MONGO_URL = "mongodb+srv://xnw0220:<password>@maimaidb-j5hf5.mongodb.net/test?retryWrites=true&w=majority"
 MONGO_DB = "maimaidb"
 MONGO_COLL = "posts"
 

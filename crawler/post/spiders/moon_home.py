@@ -2,19 +2,22 @@ import scrapy
 import bson
 from post.items import PostItem
 
-class MoonSpider(scrapy.Spider):
-    name = "moon"
-    start_urls = ['https://www.moonbbs.com/forum-46-1.html']
+class MoonHomeSpider(scrapy.Spider):
+    name = "moon_home"
+    start_urls = ['https://www.moonbbs.com/forum.php?mod=forumdisplay&fid=46&filter=sortid&sortid=57']
+    page_link = set()
 
     def parse(self, response):
         links = response.xpath("//th/a[1]/@href").extract()
+
         # 解析每一个连接的帖子内容
-        for each in links[:6]:
+        for each in links:
             yield scrapy.Request(each, callback=self.parse_content)
 
         next_page = response.xpath('//a[@class="nxt"]/@href').get()
-        if next_page:
-            yield scrapy.Request(next_page, callback=self.parse_content)
+        page_link.add(next_page)
+        if len(page_link) <= 300:
+            yield scrapy.Request(next_page, callback=self.parse)
 
 
     def parse_content(self, response):
@@ -22,7 +25,7 @@ class MoonSpider(scrapy.Spider):
         postitem['postId'] = str(bson.ObjectId())
         postitem['title'] = response.xpath('//*[@id="thread_subject"]/text()').get()
         postitem['description'] = self.get_description(response)
-        postitem['category'] = None
+        postitem['category'] = self.get_category(response)
         postitem['condition'] = self.get_condition(response)
         postitem['image'] = response.xpath('//*[@class="mbn"]/a/img//@file').extract()
         postitem['deliveryMethod'] = {}
@@ -33,14 +36,13 @@ class MoonSpider(scrapy.Spider):
         postitem['price']['offerPrice'] = self.get_offerPrice(response)
         postitem['price']['originalPrice'] = None
         postitem['user'] = {}
-        postitem['user']['userId'] = None
+        postitem['user']['userId'] = self.get_userId(response)
         postitem['user']['userName'] = response.xpath('//*[@class="authi"]/a//text()').get()
         postitem['user']['school'] = None
         postitem['contact'] = {}
         postitem['contact']['wechat'] = self.get_wechat(response)
-        postitem['contact']['email'] = None
-        postitem['contact']['phone'] = None
-        postitem['contact']['qq'] = None
+        postitem['contact']['email'] = self.get_email(response)
+        postitem['contact']['phone'] = self.get_phone(response)
         yield postitem
 
 
@@ -60,41 +62,78 @@ class MoonSpider(scrapy.Spider):
                         content = content + '。' + norm
         else:
             content = description[0].replace('\r','').replace('\n','')
-            
         return content
+                
+
+    def get_category(self, response):
+        title = response.xpath('//*[@id="thread_subject"]/text()').get()
+
+        substring = ['家具', '床', '沙发', '桌', '椅', '柜', '书架', '冰箱', '洗衣机', '空调']
+        for i in range(len(substring)):
+            if substring[i] in title:
+                return "Furniture"
+        return "Home Appliance"
 
 
     def get_condition(self, response):
         info = response.xpath('//*[@class="pcb"]/table//text()').extract()
-
-        for i in range(0, len(info)):
-            if info[i] == '新旧程度:':
-                condition = info[i+1]
-                return condition
-            
+    
+        if len(info) > 0:
+            for i in range(len(info)):
+                if info[i] == '新旧程度:':
+                    condition = info[i+1]
+                    return condition
         return None
 
 
     def get_offerPrice(self, response):
         info = response.xpath('//*[@class="pcb"]/table//text()').extract()
 
-        for i in range(0, len(info)):
-            if info[i] == '价格:':
-                offerPrice = info[i+1].replace('$', '')
-                return int(offerPrice)
-
+        if len(info) > 0:
+            for i in range(len(info)):
+                if info[i] == '价格:':
+                    offerPrice = info[i+1].replace('$', '')
+                    return int(offerPrice)
         return None
+    
+
+    def get_userId(self, response):
+        user = response.xpath('//*[@class="authi"]/a/@href').get()
+
+        return "moonbbs" + user.replace("https://www.moonbbs.com/space-uid-", "").replace(".html", "")
 
 
     def get_wechat(self, response):
         contact = response.xpath('//*[@class="contact"]/div/table/tr/td/text()').extract()
 
-        if len(contact) > 1:
-            if contact[0] == '微信号':
-                return contact[1]
-
+        if len(contact) > 0:
+            for i in range(len(contact)):
+                if contact[i] == '微信号':
+                    return contact[i+1]
         return None
 
+
+    def get_email(self, response):
+        contact = response.xpath('//*[@class="contact"]/div/table/tr/td/text()').extract()
+
+        if len(contact) > 0:
+            for i in range(len(contact)):
+                if contact[i] == '邮箱':
+                    return contact[i+1]
+        return None
+
+
+    def get_phone(self, response):
+        contact = response.xpath('//*[@class="contact"]/div/table/tr/td/text()').extract()
+
+        if len(contact) > 0:
+            for i in range(len(contact)):
+                if contact[i] == '电话':
+                    return contact[i+1]
+        return None
+
+
+        
             
             
     
