@@ -34,7 +34,6 @@ type PageState = {
   categoryList: Array<{
     name: string,
     id: string,
-    image: string,
   }>,
   showCategory: boolean
 }
@@ -53,10 +52,10 @@ export default class Add extends Component<{}, PageState> {
         // categoryName: ''
       },
       categoryList: [
-        {name: 'Furniture', id: '1', image:require('./../../static/home/home_hospital.png')},
-        {name: 'Electronic Device', id: '2', image:require('./../../static/home/home_hospital.png')},
-        {name: 'Fashion', id: '3', image:require('./../../static/home/home_hospital.png')},
-        {name: 'Home Appliance', id: '4', image:require('./../../static/home/home_hospital.png')},
+        {name: 'Furniture', id: '1'},
+        {name: 'Electronic Device', id: '2'},
+        {name: 'Fashion', id: '3', },
+        {name: 'Home Appliance', id: '4'},
       ],
       showCategory: false
     }
@@ -74,12 +73,6 @@ export default class Add extends Component<{}, PageState> {
       )
       return
     }
-  }
-
-  componentDidMount() {
-    // this.getCategory()
-  }
-  componentWillMount() {
   }
 
   config: Config = {

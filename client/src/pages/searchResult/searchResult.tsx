@@ -13,22 +13,6 @@ export default class Home extends Component {
     super(...arguments)
     this.state = {
       current: 0,
-      hospitalList: [
-        {name: '家具/饰品',
-          imageSource: require('./../../static/home/home_hospital.png'),
-        },
-        {name: '潮品',
-          imageSource: require('./../../static/home/home_chinese_medial.png'),
-
-        },
-        {name: '家用电器',
-          imageSource: require('./../../static/home/home_mediacal_store.png'),
-
-        },
-        {name: '生活百货',
-          imageSource: require('./../../static/home/home_socal_big_perosn.png'),
-        },
-      ],
       keyword: '',
       tagList: [
         { name: 'Free shipping', active: false },

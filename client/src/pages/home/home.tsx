@@ -1,7 +1,7 @@
 import Taro, { Component, Config } from '@tarojs/taro'
-import {ScrollView, View} from '@tarojs/components'
+import {Block, ScrollView, View} from '@tarojs/components'
 import {AtSearchBar, AtTag} from "taro-ui";
-import { Homeitem } from './../../components';
+import {Homeitem, ProductTitle} from './../../components';
 
 import {
   VirtualListDataManager,
@@ -40,18 +40,18 @@ export default class Home extends Component {
       current: 0,
       categoryList: [
         {name: '家具/饰品',
-          imageSource: require('./../../static/home/home_hospital.png'),
+          imageSource: require('./../../static/home/home.svg'),
         },
         {name: '潮品',
-          imageSource: require('./../../static/home/home_chinese_medial.png'),
+          imageSource: require('./../../static/home/fashion.svg'),
 
         },
         {name: '家用电器',
-          imageSource: require('./../../static/home/home_mediacal_store.png'),
+          imageSource: require('./../../static/home/electronic.svg'),
 
           },
-        {name: '生活百货',
-          imageSource: require('./../../static/home/home_socal_big_perosn.png'),
+        {name: '书',
+          imageSource: require('./../../static/home/book.svg'),
         },
       ],
       keyword: '',
@@ -226,6 +226,13 @@ export default class Home extends Component {
     this.setState({ tagList })
   }
 
+  toProductDetail = () => {
+    Taro.navigateTo({
+      url: "/pages/productDetail/productDetail"
+    })
+  }
+
+
   render() {
     const { keyword, list } = this.state;
     list.forEach(item => {
@@ -254,8 +261,15 @@ export default class Home extends Component {
                 disabled={true}
                 value={keyword}
                 onChange={this.toSearch.bind(this)}
+                customStyle = 'background: transparent;'
               />
             </View>
+
+            <ScrollView scrollX className='tag-list'>
+              {this.state.tagList.map((item) => <View className='tag' key={item.id}>
+                <AtTag name={item.name} type='primary' active={item.active} circle onClick={this.onTagClick.bind(this)}>{item.name}</AtTag></View>)}
+            </ScrollView>
+
             <View className='index-top-view-second'>
               {
                 this.state.categoryList.map((item) => {
@@ -268,11 +282,8 @@ export default class Home extends Component {
                 })
               }
             </View>
-            <ScrollView scrollX className='tag-list'>
-              {this.state.tagList.map((item) => <View className='tag' key={item.id}>
-                <AtTag name={item.name} type='primary' active={item.active} circle onClick={this.onTagClick.bind(this)}>{item.name}</AtTag></View>)}
-            </ScrollView>
-
+            <ProductTitle title="Recommend for you" />
+            <text> \n </text>
             {list.map(item =>
               item.item[0].type === 'loadMore' ? (
                 <View className='loadStatus' style={item.style}>
@@ -296,7 +307,7 @@ export default class Home extends Component {
                   style='z-index=-1'
                 >
                   {item.item.map((topic, k) => (
-                    <View className='topic-item' key={topic.id}>
+                    <View className='topic-item' key={topic.id} onClick={this.toProductDetail.bind(this)}>
                       <View className='topic-item-inner'>
                         <View
                           style={{

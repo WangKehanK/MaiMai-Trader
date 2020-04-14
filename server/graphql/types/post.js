@@ -10,7 +10,7 @@ const typeDefs = gql`
 
     extend type Query {
         getPostById(postId: ID!): Post,
-        getPosts(limit: Int!, offset: Int!, filters: PostFilters!): [Post]
+        getPosts(limit: Int, offset: Int, filters: PostFilters): [Post]
     }
 
     type Post {
