@@ -85,6 +85,7 @@ class Page extends Component<{}, PageState> {
     clearKeywordInHistory()
   }
 
+
   getHotSearch() {
     this.setState({
       hotList: ['hahaaaa', 'hahaaaa']
