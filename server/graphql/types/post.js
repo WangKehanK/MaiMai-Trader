@@ -2,10 +2,10 @@ import gql from 'graphql-tag';
 
 const typeDefs = gql`
     extend type Mutation {
-        createPost(post: PostInput!): Boolean
-        createPostDraft(post: PostInput!): Boolean
-        updatePost(post: PostInput!): Boolean
-        updatePostDraft(post: PostInput!): Boolean
+        createPost(post: PostInput!): ID
+        createPostDraft(post: PostInput!): ID
+        updatePost(post: PostInput!): ID
+        updatePostDraft(post: PostInput!): ID
     }
 
     extend type Query {

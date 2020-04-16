@@ -8,12 +8,13 @@ const createPost = async function ({ post }) {
     postData["isDraft"] = false;
     postData["postId"] = ObjectId();
     postData["createdTime"] = new Date();
-    postData["expiryTime"] = new Date(postData["expiryTime"]);
+    // postData["expiryTime"] = new Date(postData["expiryTime"]);
 
     const newPost = new Post(postData);
     try {
         await newPost.save();
-        return true;
+        console.log(postData["postId"])
+        return postData["postId"];
     } catch (err) {
         console.log(err);
         throw new Error(errorName.CREATE_FAILED);
@@ -28,7 +29,7 @@ const createPostDraft = async function ({ post }) {
     const newPost = new Post(postData);
     try {
         await newPost.save();
-        return true;
+        return postData["postId"];
     } catch (err) {
         throw new Error(errorName.CREATE_FAILED);
     }
@@ -38,7 +39,7 @@ const updatePost = async function ({ post }) {
     const postId = post.postId;
     try {
         await Post.updateOne({ postId: postId }, post, { multi: true })
-        return true;
+        return postData["postId"];
     } catch (err) {
         throw new Error(errorName.UPDATE_FAILED);
     }
@@ -48,7 +49,7 @@ const updatePostDraft = async function ({ post }) {
     const postId = post.postId;
     try {
         await Post.updateOne({ postId: postId }, post, { multi: true })
-        return true;
+        return postData["postId"];
     } catch (err) {
         throw new Error(errorName.UPDATE_FAILED);
     }
