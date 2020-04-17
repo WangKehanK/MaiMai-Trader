@@ -1,42 +1,24 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import {Block, ScrollView, View} from '@tarojs/components'
 import {AtSearchBar, AtTag} from "taro-ui";
-import {Homeitem, ProductTitle} from './../../components';
+import {Homeitem, ProductTitle, ProductCard} from './../../components';
 
-import {
-  VirtualListDataManager,
-  VirtualListItemData,
-} from 'taro-list-data-manager';
-import TaroList from 'taro-list';
+import ListView, { LazyBlock } from 'taro-listView';
 
 import './home.scss'
+import graphql from "../../api/graphql";
+import {getPost} from "../../api/gpl";
 
-type LoadStatus =
-  | 'none'
-  | 'loadMore'
-  | 'ended'
-  | 'loading'
-  | 'refreshing'
-  | 'noData';
-
-
-const HEIGHT = '410rpx';
-function getTopic(page: number) {
-  return Taro.request({
-    method: 'GET',
-    url: 'https://cnodejs.org/api/v1/topics',
-    data: {
-      page
-    }
-  });
-}
+let pageOffset = 1;
 
 export default class Home extends Component {
 
   constructor() {
     super(...arguments)
     this.state = {
-      list:[],
+      isLoaded: false,
+      hasMore: true,
+      list: [],
       current: 0,
       categoryList: [
         {name: '家具/饰品',
@@ -64,6 +46,45 @@ export default class Home extends Component {
       ],
     }
   }
+  getData = async (pLimit = pageOffset) => {
+    if (pLimit === 1) this.setState({isLoaded:false})
+    const {data} = await graphql.query({
+      query: getPost,
+      variables:{limit: 5, offset: pageOffset},
+    })
+    // this.setState({
+    //   list: data.getPosts
+    // })
+    return {data, hasMore: true, isLoaded: pLimit === 1};
+  };
+
+  componentDidMount = async () => {
+    const res = await this.getData(1)
+    console.log("hasMore", res.hasMore)
+    console.log("res",res.data.getPosts)
+    this.setState({
+      list: res.data.getPosts
+    })
+  }
+
+
+  onScrollToLower = async (fn) => {
+    const { list } = this.state;
+    console.log("origin")
+    const res = await this.getData(pageOffset+=5);
+    const newList = res.data.getPosts
+    const hasMore = res.hasMore
+    this.setState({
+      list: list.concat(newList),
+      hasMore
+    });
+    fn();
+  };
+  refList = {};
+
+  insRef = (node) => {
+    this.refList = node;
+  };
 
   componentWillMount(){
 
@@ -79,144 +100,6 @@ export default class Home extends Component {
     })
   }
 
-  ///////////////////////////////////////////////
-  // List function /////////////////////////////
-  loadStatus: LoadStatus = 'none';
-
-  dataManager = new VirtualListDataManager(
-    {
-      itemSize: HEIGHT,
-      overscan: 5,
-      // estimatedSize 尽可能接近真实尺寸
-      estimatedSize: 70,
-      column: 2,
-      onChange: data => {
-        this.setState({
-          list: data
-        });
-      }
-    },
-    Taro
-  );
-
-  count = 0;
-
-  handleInit = () => {
-    this.loadStatus = 'loading';
-
-    this.dataManager.setLoadStatus(
-      {
-        type: 'loading'
-      },
-      '140rpx'
-    );
-
-    this.refresh();
-  };
-
-  refresh = () => {
-    this.count = 0;
-
-    return this.fetch().then(({ list, status }) => {
-      // 请求结束后 清空所有加载状态 复原 itemSize
-      this.dataManager.clearAllLoadStatus();
-      this.dataManager.updateConfig({
-        itemSize: HEIGHT
-      });
-
-      if (status !== 'none') {
-        this.dataManager.clear();
-        this.dataManager.setLoadStatus({ type: status }, '140rpx');
-      } else {
-        this.dataManager.set(list);
-      }
-
-      this.loadStatus = status;
-    });
-  };
-
-  fetch = (): Promise<{
-    list: any[];
-    status: 'noData' | 'ended' | 'none';
-  }> => {
-    return new Promise((resolve, reject) => {
-      getTopic(this.page)
-        .then(({ data }) => {
-          this.count++;
-          const list: any[] = data.data || [];
-          // 这里模仿数据记载完
-          if (this.count === 10) {
-            list.length = 0;
-          }
-
-          if (list.length) {
-            this.page++;
-          }
-
-          resolve({
-            list,
-            status:
-              list.length === 0
-                ? this.page === 1
-                  ? 'noData'
-                  : 'ended'
-                : 'none'
-          });
-        })
-        .catch(reject);
-    });
-  };
-
-  handleLoadMore = () => {
-    // 这里假设加载完毕就不能再次加载了
-    if (this.loadStatus !== 'none') {
-      return;
-    }
-
-    this.loadStatus = 'loadMore';
-    const { clearAndAddData } = this.dataManager.setLoadStatus(
-      {
-        type: 'loadMore'
-      },
-      '140rpx'
-    );
-
-    this.fetch().then(({ list, status }) => {
-      this.loadStatus = status;
-      clearAndAddData(...list);
-
-      if (status !== 'none') {
-        this.dataManager.setLoadStatus(
-          {
-            type: 'ended'
-          },
-          '140rpx'
-        );
-      }
-    });
-  };
-
-  handleRefresh = cb => {
-    if (this.loadStatus !== 'none') {
-      return;
-    }
-
-    this.page = 1;
-    this.loadStatus = 'refreshing';
-
-    // 刷新时 清空所有加载状态 复原 itemSize
-    this.dataManager.clearAllLoadStatus();
-    this.dataManager.updateConfig({
-      itemSize: HEIGHT
-    });
-
-    this.refresh()
-      .then(cb)
-      .catch(cb);
-  };
-  //////////////////////////////////////////
-  // List function//////////////////////////
-  /////////////////////////////////////////
 
   onTagClick (data) {
     const { tagList } = this.state
@@ -234,104 +117,134 @@ export default class Home extends Component {
 
 
   render() {
-    const { keyword, list } = this.state;
-    list.forEach(item => {
-      item.item.forEach(topic => {
-        if (!topic.type) {
-          topic.avatarUrl = `url(${topic.author.avatar_url}) no-repeat center / cover`;
-        }
-      });
-    });
+    const {keyword, isLoaded, error, hasMore, isEmpty, list} = this.state;
+    // return (
+    //   <View className='home'>
+    //     <View className='page column-page'>
+    //       <View>
+    //         <View onClick={this.toSearch.bind(this)}>
+    //           <AtSearchBar
+    //             actionName='搜一下'
+    //             disabled={true}
+    //             value={keyword}
+    //             onChange={this.toSearch.bind(this)}
+    //             customStyle = 'background: transparent;'
+    //           />
+    //         </View>
+    //
+    //         <ScrollView scrollX className='tag-list'>
+    //           {this.state.tagList.map((item) => <View className='tag' key={item.id}>
+    //             <AtTag name={item.name} type='primary' active={item.active} circle onClick={this.onTagClick.bind(this)}>{item.name}</AtTag></View>)}
+    //         </ScrollView>
+    //
+    //         <View className='index-top-view-second'>
+    //           {
+    //             this.state.categoryList.map((item) => {
+    //               return <Homeitem
+    //                 key={item.id}
+    //                 itemText={item.name}
+    //                 imageSource={item.imageSource}
+    //                 // onItemClick={item.onItemClick}
+    //               />
+    //             })
+    //           }
+    //         </View>
+    //         <View className='lazy-view'>
+    //           <ListView
+    //             lazy
+    //             isLoaded={isLoaded}
+    //             hasMore={hasMore}
+    //             style={{height: '100vh'}}
+    //             onScrollToLower={this.onScrollToLower}
+    //           >
+    //             {list.map((item, index) => {
+    //               return (
+    //                 <View className='item' key={index}>
+    //                   <LazyBlock current={index} className='avatar'>
+    //                     <Image className='avatar' src={item.author.avatar_url} />
+    //                   </LazyBlock>
+    //                   <View className='title'>
+    //                     {item.title}
+    //                   </View>
+    //                 </View>
+    //               )
+    //             })}
+    //           </ListView>
+    //         </View>
+    //       </View>
+    //     </View>
+    //   </View>
+    // )
     return (
-      <View className='home'>
-        <View className='page column-page'>
-          <View>
-          <TaroList
-            enableBackToTop
-            onRefresh={this.handleRefresh}
-            onLoadMore={this.handleLoadMore}
-            onVirtualListInit={this.handleInit}
-            virtual
-            height='100vh'
-            dataManager={this.dataManager}
-          >
-            <View onClick={this.toSearch.bind(this)}>
-              <AtSearchBar
-                actionName='搜一下'
-                disabled={true}
-                value={keyword}
-                onChange={this.toSearch.bind(this)}
-                customStyle = 'background: transparent;'
-              />
-            </View>
-
-            <ScrollView scrollX className='tag-list'>
-              {this.state.tagList.map((item) => <View className='tag' key={item.id}>
-                <AtTag name={item.name} type='primary' active={item.active} circle onClick={this.onTagClick.bind(this)}>{item.name}</AtTag></View>)}
-            </ScrollView>
-
-            <View className='index-top-view-second'>
-              {
-                this.state.categoryList.map((item) => {
-                  return <Homeitem
-                    key={item.id}
-                    itemText={item.name}
-                    imageSource={item.imageSource}
-                    // onItemClick={item.onItemClick}
-                  />
-                })
-              }
-            </View>
-            <ProductTitle title="Recommend for you" />
-            <text> \n </text>
-            {list.map(item =>
-              item.item[0].type === 'loadMore' ? (
-                <View className='loadStatus' style={item.style}>
-                  加载更多...
-                </View>
-              ) : item.item[0].type === 'ended' ? (
-                <View className='loadStatus' style={item.style}>
-                  没有更多了
-                </View>
-              ) : item.item[0].type === 'loading' ? (
-                <View className='loadStatus' style={item.style}>
-                  加载中...
-                </View>
-              ) : (
-                <View
-                  style={{
-                    ...item.style
-                  }}
-                  key={item.index}
-                  className='topic-column'
-                  style='z-index=-1'
-                >
-                  {item.item.map((topic, k) => (
-                    <View className='topic-item' key={topic.id} onClick={this.toProductDetail.bind(this)}>
-                      <View className='topic-item-inner'>
-                        <View
-                          style={{
-                            background: topic.avatarUrl
-                          }}
-                          className='topic-item__avatar'
-                        />
-                        <View className='topic-item__main'>
-                          <View className='topic-item__title'>
-                            #{item.index * 2 + k} - {topic.title}
-                          </View>
-                          <View className='topic-item__price'>{topic.author.loginname}</View>
-                        </View>
-                      </View>
-                    </View>
-                  ))}
-                </View>
-              )
-            )}
-          </TaroList>
+      <View className='lazy-view'>
+        <ListView
+          // ref={node => this.insRef(node)}
+          lazy
+          isLoaded
+          hasMore={hasMore}
+          style={{height: '100vh'}}
+          distanceToRefresh= {10}
+          onScrollToLower={fn => this.onScrollToLower(fn)}
+        >
+          <View onClick={this.toSearch.bind(this)}>
+            <AtSearchBar
+              actionName='搜一下'
+              disabled={true}
+              value={keyword}
+              onChange={this.toSearch.bind(this)}
+              customStyle = 'background: transparent;'
+            />
           </View>
-      </View>
-      </View>
-    )
+
+          <ScrollView scrollX className='tag-list'>
+            {this.state.tagList.map((item) => <View className='tag' key={item.id}>
+              <AtTag name={item.name} type='primary' active={item.active} circle onClick={this.onTagClick.bind(this)}>{item.name}</AtTag></View>)}
+          </ScrollView>
+
+          <View className='index-top-view-second'>
+            {
+              this.state.categoryList.map((item) => {
+                return <Homeitem
+                  key={item.id}
+                  itemText={item.name}
+                  imageSource={item.imageSource}
+                  // onItemClick={item.onItemClick}
+                />
+              })
+            }
+          </View>
+          <View className='h'>
+            <Text>推荐</Text>
+          </View>
+          {list.map((item, index) => {
+            return (
+              <View className='item' key={index}>
+                {/*<LazyBlock current={index} className='avatar'>*/}
+                {/*  <Image className='avatar' src={item.image[0]} />*/}
+                {/*</LazyBlock>*/}
+                {/*<View className='title'>*/}
+                {/*  {item.title}*/}
+                {/*</View>*/}
+                {/*<ProductCard*/}
+                {/*  title={item.title}*/}
+                {/*  image={item.image[0]}/>*/}
+                <text>\n</text>
+                <View className="good-grid" onClick={this.toProductDetail}>
+                  <View className='b'>
+                    <Block key={item.id}>
+                      <View className={`item ${index % 2 == 0 ? '' : 'item-b'}`}>
+                          <Image className='img' src={item.image[0]}></Image>
+                          <Text className='name'>{item.title}</Text>
+                          <Text className='price'>￥{item.condition}</Text>
+                      </View>
+                    </Block>
+                  </View>
+                </View>
+              </View>
+            )
+          })}
+        </ListView>
+      </View>)
   }
 }
 

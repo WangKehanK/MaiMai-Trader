@@ -18,6 +18,7 @@ let openID = getOpenID()
 
 type PageState = {
   products: {
+    postId: string
     title: string,
     description: string,
     category: string,
@@ -43,6 +44,7 @@ export default class Add extends Component<{}, PageState> {
     super(props)
     this.state = {
       products: {
+        postId:'',
         title: '',
         description: '',
         expiryTime: '2020-03-15T00:48:09Z',
@@ -63,6 +65,7 @@ export default class Add extends Component<{}, PageState> {
   componentDidShow(){
     //如果没登录，乖乖给我去登录
     const token = Taro.getStorageSync('userInfo')
+    console.log(token.openID)
     if(!!!token) {
       Taro.switchTab({url: '/pages/ucenter/ucenter'}).then(
         Taro.showToast({
@@ -79,14 +82,6 @@ export default class Add extends Component<{}, PageState> {
     navigationBarTitleText: '添加'
   }
 
-  // getCategory = async () => {
-  //   const res = await graphql.query({ query: category })
-  //   this.setState({
-  //     categoryList: res.data.category,
-  //     garbage: { ...this.state.garbage, categoryId: res.data.category[0].id, categoryName: res.data.category[0].name, name: this.$router.params.name }
-  //   })
-  // }
-
   handleChangeCategory (value) {
     this.setState({
       products: {...this.state.products, category:value}
@@ -95,9 +90,9 @@ export default class Add extends Component<{}, PageState> {
 
   createNext = async (category) => {
     const result = await graphql.mutate({mutation: createProduct , variables: {category: category}})
-    console.log(result)
+    const pid = result.data.createPost
     Taro.navigateTo({
-      url: `/pages/createPost2/createPost2?category=${category}`
+      url: `/pages/createPost2/createPost2?category=${category}&postId=${pid}`
     })
   }
   cancel = () => {

@@ -155,3 +155,83 @@ width: 0;
 height: 0;
 color: transparent;
 }
+/** 底部好商品 **/
+
+
+.good-grid {
+  width: 750px;
+  height: auto;
+  overflow: hidden;
+}
+
+.h {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  height: 130px;
+  font-size: 33px;
+  color: #333;
+}
+
+.good-grid .b {
+  width: 750px;
+  padding: 0 6.25px;
+  height: auto;
+  overflow: hidden;
+}
+
+.good-grid .b .item {
+  float: left;
+  background: #fff;
+  width: 365px;
+  margin-bottom: 6.25px;
+  height: 452px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.good-grid .b .item .a {
+  height: 452px;
+  width: 100%;
+}
+
+.good-grid .b .item-b {
+  margin-left: 6.25px;
+}
+
+.good-grid .item .img {
+  margin-top: 20px;
+  width: 302px;
+  height: 302px;
+  background-size: cover;
+}
+
+.good-grid .item .name {
+  display: block;
+  width: 365.625px;
+  padding: 0 20px;
+  overflow: hidden;
+  height: 38px;
+  margin: 11.5px 0 22px 0;
+  text-align: center;
+  font-size: 30px;
+  color: #333;
+}
+
+.good-grid .item .price {
+  display: block;
+  width: 365.625px;
+  height: 30px;
+  text-align: center;
+  font-size: 30px;
+  color: #ab956d;
+}
+
+.good-grid .t {
+  height: 100px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
