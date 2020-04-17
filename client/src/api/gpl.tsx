@@ -1,5 +1,17 @@
 import { gql } from 'apollo-boost'
 
+export const getPost = gql`
+  query GetPosts($limit: Int, $offset: Int){
+    getPosts(limit: $limit, offset: $offset, filters:{}){
+      title
+      postId
+      description
+      condition
+      image
+      postId
+    }
+  }
+`
 export const category = gql`
   query {
     category {

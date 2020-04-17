@@ -4,5 +4,6 @@ import Homeitem from './Homeitem'
 import ProductTitle from './ProductTitle'
 import Footer from './Footer'
 import Header from './Header'
+import ProductCard from './ProductCard'
 
-export { ProductTitle, Homeitem, UploadImage, Footer, Header }
+export { ProductTitle, ProductCard, Homeitem, UploadImage, Footer, Header }

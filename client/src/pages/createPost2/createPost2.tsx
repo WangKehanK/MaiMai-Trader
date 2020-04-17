@@ -10,6 +10,7 @@ import './createPost2.scss'
 
 type PageState = {
   products: {
+    postId: string,
     title: string,
     description: string,
     expiryTime: string,
@@ -29,6 +30,7 @@ export default class Add extends Component<{}, PageState> {
     super(props)
     this.state = {
       products: {
+        postId:'',
         title: '',
         description: '',
         expiryTime: '2020-03-15T00:48:09Z',
@@ -50,7 +52,7 @@ export default class Add extends Component<{}, PageState> {
   }
   componentWillMount() {
     //通过路由传值
-    let params = this.$router.params.category
+    let params = this.$router.params
     console.log("params:", params)
   }
 
