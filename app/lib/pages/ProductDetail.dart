@@ -43,6 +43,8 @@ class ProductDetail extends StatefulWidget {
 }
 
 class _ProductDetailState extends State<ProductDetail> {
+  
+
   @override
   Widget build(BuildContext context) {
     List<int> list = [1, 2, 3];

@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomPadding extends StatelessWidget {
   final Widget child;
-  final int pixelMultiple;
+  final double pixelMultiple;
   final bool rowPadding;
   final bool columnPadding;
 
