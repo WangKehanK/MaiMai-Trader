@@ -1,116 +1,137 @@
 import 'package:app/common/extension.dart';
 import 'package:app/components/CustomPadding.dart';
 import 'package:app/components/PriceOffer.dart';
+import 'package:app/main.dart';
+import 'package:app/models/ProductCardModel.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class GridViewList extends StatelessWidget {
-  const GridViewList({Key key}) : super(key: key);
+  final List<ProductCardModel> listOfProductCardModel;
+
+  const GridViewList({
+    Key key,
+    @required this.listOfProductCardModel,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GridView(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: ScreenUtil().setWidth(3),
-          mainAxisSpacing: ScreenUtil().setWidth(3),
-          crossAxisSpacing: 10,
-          childAspectRatio: 166 / 236,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: ScreenUtil().setWidth(10),
+        crossAxisSpacing: ScreenUtil().setHeight(10),
+        childAspectRatio: 166 / 236,
+      ),
+      children: List.generate(
+        listOfProductCardModel.length,
+        (index) => SingleGridViewComponent(
+          productCardModel: listOfProductCardModel[index],
         ),
-        children: <Widget>[
-          SingleGridViewComponent(
-            image:
-                "https://upload.wikimedia.org/wikipedia/commons/0/0f/Eiffel_Tower_Vertical.JPG",
-          ),
-          SingleGridViewComponent(),
-          SingleGridViewComponent(),
-          SingleGridViewComponent(),
-          SingleGridViewComponent(),
-          SingleGridViewComponent()
-        ]);
+      ),
+    );
   }
 }
 
 class SingleGridViewComponent extends StatelessWidget {
-  final String image;
+  final ProductCardModel productCardModel;
 
-  const SingleGridViewComponent({Key key, this.image}) : super(key: key);
+  const SingleGridViewComponent({
+    Key key,
+    @required this.productCardModel,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          ROUTE.PRODUCT_DETAIL,
+          arguments: {'userId': "maoyizhou"},
+        );
+      },
+      child: Container(
         width: ScreenUtil().setWidth(166),
-        child: Column(children: <Widget>[
-          ClipRRect(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(5.0),
-                  topRight: Radius.circular(5.0)),
-              child: Image.network(
-                image ??
-                    "https://pickaface.net/gallery/avatar/unr_sample_170130_2257_9qgawp.png",
-                width: ScreenUtil().setWidth(166),
-                height: ScreenUtil().setHeight(166),
-                fit: BoxFit.cover,
-              )),
-          CustomPadding(
+        child: Column(
+          children: <Widget>[
+            ClipRRect(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(5.0),
+                    topRight: Radius.circular(5.0)),
+                child: Image.network(
+                  productCardModel.image ??
+                      "https://www.narcity.com/u/2018/09/24/4687c7e175aeee68700bb09c9b623e6603e88c6e.png_1200x630.png",
+                  width: ScreenUtil().setWidth(166),
+                  height: ScreenUtil().setHeight(166),
+                  fit: BoxFit.cover,
+                )),
+            CustomPadding(
               pixelMultiple: 2,
               rowPadding: true,
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text("Wooden Table Ikea",
-                        style: GoogleFonts.roboto(
-                          fontSize: ScreenUtil().setSp(14),
-                          fontWeight: FontWeight.w600,
-                          color: HexColor("#000000"),
-                        )),
-                    Text(
-                      'NEW',
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(productCardModel.title,
                       style: GoogleFonts.roboto(
-                          fontSize: ScreenUtil().setSp(10),
-                          fontWeight: FontWeight.w600,
-                          color: HexColor("#4891FF")),
-                    ),
-                  ])),
-          CustomPadding(
-              pixelMultiple: 0.75,
-              rowPadding: true,
-              child: Container(
-                width: ScreenUtil().setWidth(166),
-                child: Text(
-                  "IkeaWooden Table IkeaWooden Table IkeaWooden Table Ikea",
-                  style: GoogleFonts.roboto(
-                    fontSize: ScreenUtil().setSp(12),
-                    fontWeight: FontWeight.w400,
-                    color: HexColor("#000000"),
+                        fontSize: ScreenUtil().setSp(14),
+                        fontWeight: FontWeight.w600,
+                        color: HexColor("#000000"),
+                      )),
+                  Text(
+                    'NEW',
+                    style: GoogleFonts.roboto(
+                        fontSize: ScreenUtil().setSp(10),
+                        fontWeight: FontWeight.w600,
+                        color: HexColor("#4891FF")),
                   ),
-                  maxLines: 1,
-                ),
-              )),
-          CustomPadding(
+                ],
+              ),
+            ),
+            CustomPadding(
+                pixelMultiple: 0.75,
+                rowPadding: true,
+                child: Container(
+                  width: ScreenUtil().setWidth(166),
+                  child: Text(
+                    productCardModel.description,
+                    style: GoogleFonts.roboto(
+                      fontSize: ScreenUtil().setSp(12),
+                      fontWeight: FontWeight.w400,
+                      color: HexColor("#000000"),
+                    ),
+                    maxLines: 1,
+                  ),
+                )),
+            CustomPadding(
               pixelMultiple: 1,
               rowPadding: true,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Row(children: <Widget>[
-                    PriceOffer(
+                  Row(
+                    children: <Widget>[
+                      PriceOffer(
                         color: HexColor('#D30000'),
-                        price: 10,
+                        price: productCardModel.price.offerPrice,
                         dollarSize: 10,
                         priceSize: 14,
-                        lineThrough: false),
-                    Padding(
-                        padding:
-                            EdgeInsets.only(left: ScreenUtil().setWidth(8))),
-                    PriceOffer(
+                        lineThrough: false,
+                      ),
+                      Padding(
+                          padding:
+                              EdgeInsets.only(left: ScreenUtil().setWidth(8))),
+                      PriceOffer(
                         color: HexColor('#808080'),
-                        price: 25,
+                        price: productCardModel.price.originalPrice,
                         dollarSize: 10,
                         priceSize: 14,
-                        lineThrough: true)
-                  ]),
+                        lineThrough: true,
+                      )
+                    ],
+                  ),
                   Row(
                     children: <Widget>[
                       Text(
@@ -130,7 +151,11 @@ class SingleGridViewComponent extends StatelessWidget {
                     ],
                   )
                 ],
-              )),
-        ]));
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

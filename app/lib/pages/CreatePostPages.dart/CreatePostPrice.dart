@@ -18,6 +18,91 @@ class CreatePostPricePage extends StatefulWidget {
 
 class _CreatePostPricePageState extends State<CreatePostPricePage> {
   bool check = false;
+  void showSimpleCustomDialog(BuildContext context) {
+    Dialog simpleDialog = Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      child: Container(
+        margin: EdgeInsets.all(ScreenUtil().setHeight(12)),
+        height: ScreenUtil().setHeight(236),
+        width: ScreenUtil().setWidth(308),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Icon(CustomIcons.angle_left),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: ScreenUtil().setHeight(16)),
+                  child: Text(
+                    "Are you sure to leave?",
+                    style: GoogleFonts.roboto(
+                      fontSize: ScreenUtil().setSp(24),
+                      fontWeight: FontWeight.w600,
+                      color: HexColor("#000000"),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              width: ScreenUtil().setWidth(342),
+              padding: EdgeInsets.only(bottom: ScreenUtil().setHeight(22)),
+              child: Column(
+                children: <Widget>[
+                  GestureDetector(
+                    // onTap: () => widget.callback(NormalButtonContent.NEXT),
+                    child: MainButton(
+                      height: 48,
+                      width: 260,
+                      backGroundColor: HexColor("#FFC700"),
+                      child: Text(
+                        "Save Draft",
+                        style: GoogleFonts.roboto(
+                          fontSize: ScreenUtil().setSp(16),
+                          fontWeight: FontWeight.w600,
+                          color: HexColor("#000000"),
+                        ),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    // onTap: () => widget.callback(NormalButtonContent.CANCEL),
+                    child: MainButton(
+                      height: 48,
+                      width: 260,
+                      backGroundColor: HexColor("#FFFFFF"),
+                      opacity: 0.5,
+                      child: Text(
+                        "Delete Draft",
+                        style: GoogleFonts.roboto(
+                          fontSize: ScreenUtil().setSp(18),
+                          fontWeight: FontWeight.w400,
+                          color: HexColor("#000000"),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+    showDialog(
+        context: context, builder: (BuildContext context) => simpleDialog);
+  }
+
   @override
   Widget build(BuildContext context) {
     return CreatePostPage(
@@ -26,7 +111,8 @@ class _CreatePostPricePageState extends State<CreatePostPricePage> {
           Navigator.pushNamed(context, '/createPostPage/subCategory');
         }
         if (buttonType == NormalButtonContent.CANCEL) {
-          Navigator.pop(context);
+          // Navigator.pop(context);
+          showSimpleCustomDialog(context);
         }
         if (buttonType == NormalButtonContent.SAVE) {}
       },

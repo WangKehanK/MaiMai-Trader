@@ -46,15 +46,15 @@ List<Map<String, dynamic>> conditionMap = [
   },
 ];
 
-class CreatePostSubCategoryPage extends StatefulWidget {
-  CreatePostSubCategoryPage({Key key}) : super(key: key);
+class CreatePostSubCategory extends StatefulWidget {
+  CreatePostSubCategory({Key key}) : super(key: key);
 
   @override
-  _CreatePostSubCategoryPageState createState() =>
-      _CreatePostSubCategoryPageState();
+  _CreatePostSubCategoryState createState() =>
+      _CreatePostSubCategoryState();
 }
 
-class _CreatePostSubCategoryPageState extends State<CreatePostSubCategoryPage> {
+class _CreatePostSubCategoryState extends State<CreatePostSubCategory> {
   @override
   Widget build(BuildContext context) {
     return CreatePostPage(
