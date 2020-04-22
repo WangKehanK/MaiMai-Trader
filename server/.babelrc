@@ -1,6 +1,1 @@
-{
-    "presets": [
-        "env"
-    ],
-    "plugins": []
-}
+{ "presets": ["es2015"] }

@@ -73,8 +73,8 @@ const getPosts = async function ({ limit, offset, filters }) {
     try {
         const query = await Post.paginate({
             $or: [
-                { description: { $regex: searchText, $options: "i" }, ...processedFilters },
-                { title: { $regex: searchText, $options: "i" }, ...processedFilters }
+                { description: { $regex: searchText, $options: "i" }, },// ...processedFilters },
+                { title: { $regex: searchText, $options: "i" }, }//...processedFilters }
             ]
         }, { offset: offset, limit: limit }).then(
             (docs, err) => {

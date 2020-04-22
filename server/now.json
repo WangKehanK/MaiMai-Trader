@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
         {
-            "src": "app.js",
+            "src": "lib/app.js",
             "use": "@now/node-server"
         }
     ]
