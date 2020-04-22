@@ -33,7 +33,15 @@ const User = {
 };
 
 const UserSchema = new Schema({
-    ...User,
+    //...User,
+    userName: String,
+    unionId: String,
+    openId: String,
+    gender: String,
+    avatar: String,
+    locale: Locale,
+    school: School,
+    contact: Contact,
     createdTime: Date,
 });
 

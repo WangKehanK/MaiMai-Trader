@@ -54,10 +54,13 @@ var authenticate = async function ({ user }) {
             openId: openId
         }
 
-        var userData = {
-            ...user,
-            openId: openId
-        };
+        // var userData = {
+        //     ...user,
+        //     openId: openId
+        // };
+
+        var userData = user;
+        userData["openId"] = openId;
 
         var ret = await upsertUser(userQuery, userData).then((res, err) => {
             return res;
