@@ -31,14 +31,14 @@ List<Map<String, dynamic>> dataMap = [
   },
 ];
 
-class CreatePostCategoryPage extends StatefulWidget {
-  CreatePostCategoryPage({Key key}) : super(key: key);
+class CreatePostCategory extends StatefulWidget {
+  CreatePostCategory({Key key}) : super(key: key);
 
   @override
-  _CreatePostCategoryPageState createState() => _CreatePostCategoryPageState();
+  _CreatePostCategoryState createState() => _CreatePostCategoryState();
 }
 
-class _CreatePostCategoryPageState extends State<CreatePostCategoryPage> {
+class _CreatePostCategoryState extends State<CreatePostCategory> {
   @override
   Widget build(BuildContext context) {
     return CreatePostPage(
