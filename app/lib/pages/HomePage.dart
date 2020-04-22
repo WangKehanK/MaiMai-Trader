@@ -5,6 +5,8 @@ import 'package:app/components/GridViewList.dart';
 import 'package:app/components/HomePageCategory.dart';
 import 'package:app/components/SearchBar.dart';
 import 'package:app/components/TouchableButton.dart';
+import 'package:app/graphql/repositories.dart';
+import 'package:app/models/ProductCardModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,21 +20,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String readRepositories = """
-    query GetPosts(\$limit: Int!, \$offset: Int!, \$filters: PostFilters!) {
-      getPosts(limit: \$limit, offset: \$offset, filters: \$filters) {
-          postId
-          title
-          description
-          image
-          price {
-            offerPrice
-            originalPrice
-          }
-      }
-    }
-  """;
-
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, width: 375, height: 667, allowFontScaling: true);
@@ -44,7 +31,7 @@ class _HomePageState extends State<HomePage> {
         columnPadding: true,
         child: Query(
           options: QueryOptions(
-            documentNode: gql(readRepositories),
+            documentNode: gql(Repository.Get_Posts),
             variables: {
               'limit': 20,
               'offset': 0,
@@ -63,16 +50,17 @@ class _HomePageState extends State<HomePage> {
             }
 
             if (result.loading) {
-              print("resulteither Map: ");
-              print(result.timestamp);
               return Column(
                 children: <Widget>[Text('Loading')],
               );
             }
 
-            // it can be either Map or List
-            print("resulteither Map: ");
-            print(result);
+            List<ProductCardModel> listOfProductModel = [];
+            (result.data["getPosts"] as List).forEach((element) {
+              listOfProductModel.add(ProductCardModel.fromJson(element));
+            });
+            print(listOfProductModel[0].image);
+
             return ListView(
               children: <Widget>[
                 Column(
@@ -120,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                   pixelMultiple: 1.5,
                   rowPadding: true,
                   child: GridViewList(
-                    listOfProductCardModel: [],
+                    listOfProductCardModel: listOfProductModel,
                   ),
                 ),
               ],

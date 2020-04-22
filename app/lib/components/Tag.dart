@@ -29,7 +29,8 @@ class Tag extends StatelessWidget {
     );
   }
 
-  List<Widget> generator({bool freeShipping, String condition}) {
+  List<Widget> generator(
+      {bool freeShipping, String condition, String category}) {
     List<Widget> res = [];
 
     if (freeShipping) {
@@ -56,11 +57,40 @@ class Tag extends StatelessWidget {
           tag = "五成新";
           break;
       }
-      res.add(Padding(
+      res.add(
+        Padding(
           padding: EdgeInsets.only(
             right: ScreenUtil().setHeight(12),
           ),
-          child: Tag(tag: tag)));
+          child: Tag(tag: tag),
+        ),
+      );
+    }
+
+    if (category != null) {
+      String tag = "";
+      switch (category) {
+        case "Furniture":
+          tag = "家具";
+          break;
+        case "ElectronicDevice":
+          tag = "电子设备";
+          break;
+        case "HomeAppliance":
+          tag = "家用电器";
+          break;
+        case "Fashion":
+          tag = "时尚";
+          break;
+      }
+      res.add(
+        Padding(
+          padding: EdgeInsets.only(
+            right: ScreenUtil().setHeight(12),
+          ),
+          child: Tag(tag: tag),
+        ),
+      );
     }
 
     return res;

@@ -50,7 +50,7 @@ class SingleGridViewComponent extends StatelessWidget {
         Navigator.pushNamed(
           context,
           ROUTE.PRODUCT_DETAIL,
-          arguments: {'userId': "maoyizhou"},
+          arguments: productCardModel.postId,
         );
       },
       child: Container(
@@ -58,34 +58,42 @@ class SingleGridViewComponent extends StatelessWidget {
         child: Column(
           children: <Widget>[
             ClipRRect(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(5.0),
-                    topRight: Radius.circular(5.0)),
-                child: Image.network(
-                  productCardModel.image ??
-                      "https://www.narcity.com/u/2018/09/24/4687c7e175aeee68700bb09c9b623e6603e88c6e.png_1200x630.png",
-                  width: ScreenUtil().setWidth(166),
-                  height: ScreenUtil().setHeight(166),
-                  fit: BoxFit.cover,
-                )),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(5.0),
+                  topRight: Radius.circular(5.0)),
+              child: Image.network(
+                productCardModel.image[0] ??
+                    "https://www.narcity.com/u/2018/09/24/4687c7e175aeee68700bb09c9b623e6603e88c6e.png_1200x630.png",
+                width: ScreenUtil().setWidth(166),
+                height: ScreenUtil().setHeight(166),
+                fit: BoxFit.cover,
+              ),
+            ),
             CustomPadding(
               pixelMultiple: 2,
               rowPadding: true,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(productCardModel.title,
+                  Container(
+                    width: ScreenUtil().setWidth(140),
+                    child: Text(
+                      productCardModel.title,
+                      maxLines: 1,
                       style: GoogleFonts.roboto(
                         fontSize: ScreenUtil().setSp(14),
                         fontWeight: FontWeight.w600,
                         color: HexColor("#000000"),
-                      )),
+                      ),
+                    ),
+                  ),
                   Text(
                     'NEW',
                     style: GoogleFonts.roboto(
-                        fontSize: ScreenUtil().setSp(10),
-                        fontWeight: FontWeight.w600,
-                        color: HexColor("#4891FF")),
+                      fontSize: ScreenUtil().setSp(10),
+                      fontWeight: FontWeight.w600,
+                      color: HexColor("#4891FF"),
+                    ),
                   ),
                 ],
               ),
@@ -123,13 +131,15 @@ class SingleGridViewComponent extends StatelessWidget {
                       Padding(
                           padding:
                               EdgeInsets.only(left: ScreenUtil().setWidth(8))),
-                      PriceOffer(
-                        color: HexColor('#808080'),
-                        price: productCardModel.price.originalPrice,
-                        dollarSize: 10,
-                        priceSize: 14,
-                        lineThrough: true,
-                      )
+                      productCardModel.price.originalPrice == null
+                          ? Container()
+                          : PriceOffer(
+                              color: HexColor('#808080'),
+                              price: productCardModel.price.originalPrice,
+                              dollarSize: 10,
+                              priceSize: 14,
+                              lineThrough: true,
+                            )
                     ],
                   ),
                   Row(
