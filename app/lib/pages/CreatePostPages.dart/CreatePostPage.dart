@@ -30,7 +30,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
           children: <Widget>[
             widget.child,
             Padding(
-              padding: EdgeInsets.only(bottom: ScreenUtil().setHeight(30)),
+              padding: EdgeInsets.only(bottom: ScreenUtil().setHeight(0)),
               child: NextAndCancel(callback: widget.callback),
             )
           ],

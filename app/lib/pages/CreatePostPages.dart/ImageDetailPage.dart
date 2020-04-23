@@ -1,3 +1,4 @@
+import 'package:app/common/custom_icons_icons.dart';
 import 'package:app/common/extension.dart';
 import 'package:app/components/CustomAppBar.dart';
 import 'package:app/components/CustomPadding.dart';
@@ -40,7 +41,6 @@ class _ImageDetailPageState extends State<ImageDetailPage> {
             projectSnap.hasData == null) {
           return Container();
         }
-        // print('project snapshot data is: ${projectSnap.data}');
         return Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -76,8 +76,8 @@ class _ImageDetailPageState extends State<ImageDetailPage> {
                         ),
                       ),
                       Icon(
-                        Icons.chevron_left,
-                        size: ScreenUtil().setSp(32),
+                        CustomIcons.trash,
+                        size: ScreenUtil().setSp(24),
                       ),
                     ],
                   ),
@@ -99,25 +99,25 @@ class _ImageDetailPageState extends State<ImageDetailPage> {
                 ),
               ],
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: ScreenUtil().setHeight(50),
-              ),
-              child: MainButton(
-                width: 344,
-                height: 52,
-                backGroundColor: HexColor("#FFFFFF"),
-                borderColor: HexColor("#808080"),
-                child: Text(
-                  "Set as main image",
-                  style: GoogleFonts.roboto(
-                    fontSize: ScreenUtil().setSp(18),
-                    fontWeight: FontWeight.w600,
-                    color: HexColor("#000000"),
-                  ),
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.only(
+            //     bottom: ScreenUtil().setHeight(50),
+            //   ),
+            //   child: MainButton(
+            //     width: 344,
+            //     height: 52,
+            //     backGroundColor: HexColor("#FFFFFF"),
+            //     borderColor: HexColor("#808080"),
+            //     child: Text(
+            //       "Set as main image",
+            //       style: GoogleFonts.roboto(
+            //         fontSize: ScreenUtil().setSp(18),
+            //         fontWeight: FontWeight.w600,
+            //         color: HexColor("#000000"),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         );
       },

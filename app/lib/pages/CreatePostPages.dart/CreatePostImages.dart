@@ -1,8 +1,8 @@
 import 'package:app/common/extension.dart';
 import 'package:app/components/CustomPadding.dart';
 import 'package:app/components/MainButton.dart';
+import 'package:app/models/ProductDetailModel.dart';
 import 'package:app/pages/CreatePostPages.dart/ImageDetailPage.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:app/pages/CreatePostPages.dart/CreatePostPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -20,7 +20,6 @@ class CreatePostImage extends StatefulWidget {
 
 class _CreatePostImageState extends State<CreatePostImage> {
   List<Asset> images = List<Asset>();
-  String _error = 'No Error Dectected';
 
   Widget buildGridView() {
     return GridView.count(
@@ -111,7 +110,6 @@ class _CreatePostImageState extends State<CreatePostImage> {
 
     setState(() {
       images = resultList.isEmpty ? images : resultList;
-      _error = error;
     });
   }
 
@@ -119,10 +117,16 @@ class _CreatePostImageState extends State<CreatePostImage> {
 
   @override
   Widget build(BuildContext context) {
+    final ProductModel productModel = ModalRoute.of(context).settings.arguments;
+
     return CreatePostPage(
       callback: (buttonType) {
         if (buttonType == NormalButtonContent.NEXT) {
-          Navigator.pushNamed(context, '/createPostPage/');
+          Navigator.pushNamed(
+            context,
+            '/createPostPage/price',
+            arguments: productModel,
+          );
         }
         if (buttonType == NormalButtonContent.CANCEL) {
           Navigator.pop(context);

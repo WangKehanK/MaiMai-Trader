@@ -2,13 +2,14 @@ import 'package:app/common/custom_icons_icons.dart';
 import 'package:app/common/extension.dart';
 import 'package:app/components/CustomPadding.dart';
 import 'package:app/components/MainButton.dart';
+import 'package:app/models/ProductDetailModel.dart';
 import 'package:app/pages/CreatePostPages.dart/CreatePostPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-List<Map<String, dynamic>> dataMap = [
+List<Map<String, dynamic>> categoryMap = [
   {
     "name": "Home",
     "content": "assets/image/Home.png",
@@ -25,7 +26,7 @@ List<Map<String, dynamic>> dataMap = [
     "isSelected": false,
   },
   {
-    "name": "Book",
+    "name": "Lifestyle",
     "content": "assets/image/Book.png",
     "isSelected": false,
   },
@@ -39,12 +40,17 @@ class CreatePostCategory extends StatefulWidget {
 }
 
 class _CreatePostCategoryState extends State<CreatePostCategory> {
+  ProductModel productModel = new ProductModel();
   @override
   Widget build(BuildContext context) {
     return CreatePostPage(
       callback: (buttonType) {
         if (buttonType == NormalButtonContent.NEXT) {
-          Navigator.pushNamed(context, '/createPostPage/subCategory');
+          Navigator.pushNamed(
+            context,
+            '/createPostPage/subCategory',
+            arguments: productModel,
+          );
         }
         if (buttonType == NormalButtonContent.CANCEL) {
           Navigator.pop(context);
@@ -53,7 +59,7 @@ class _CreatePostCategoryState extends State<CreatePostCategory> {
       },
       child: Container(
         padding: EdgeInsets.only(top: ScreenUtil().setHeight(43)),
-        height: ScreenUtil().setHeight(450),
+        // height: ScreenUtil().setHeight(450),
         width: ScreenUtil().setWidth(342),
         child: Column(
           children: <Widget>[
@@ -75,58 +81,60 @@ class _CreatePostCategoryState extends State<CreatePostCategory> {
               rowPadding: true,
             ),
             GridView(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: ScreenUtil().setWidth(10),
-                  crossAxisSpacing: ScreenUtil().setHeight(10),
-                  childAspectRatio: 1 / 1,
-                ),
-                children: List.generate(
-                  4,
-                  (index) => GestureDetector(
-                      child: MainButton(
-                        height: 166,
-                        width: 166,
-                        type: ButtonType.CATEGORY,
-                        isSelected: dataMap[index]["isSelected"],
-                        backGroundColor: HexColor("#FFFFFF"),
-                        borderColor: HexColor("#000000"),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Image.asset(
-                              dataMap[index]["content"],
-                              width: ScreenUtil().setWidth(94),
-                              height: ScreenUtil().setHeight(94),
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: ScreenUtil().setWidth(10),
+                crossAxisSpacing: ScreenUtil().setHeight(10),
+                childAspectRatio: 1 / 1,
+              ),
+              children: List.generate(
+                4,
+                (index) => GestureDetector(
+                    child: MainButton(
+                      height: 166,
+                      width: 166,
+                      type: ButtonType.CATEGORY,
+                      isSelected: categoryMap[index]["isSelected"],
+                      backGroundColor: HexColor("#FFFFFF"),
+                      borderColor: HexColor("#000000"),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Image.asset(
+                            categoryMap[index]["content"],
+                            width: ScreenUtil().setWidth(94),
+                            height: ScreenUtil().setHeight(94),
+                          ),
+                          CustomPadding(
+                            pixelMultiple: 2,
+                            rowPadding: true,
+                          ),
+                          Text(
+                            categoryMap[index]["name"],
+                            style: GoogleFonts.roboto(
+                              color: HexColor("#000000"),
+                              fontSize: ScreenUtil().setSp(14),
+                              fontWeight: FontWeight.w400,
                             ),
-                            CustomPadding(
-                              pixelMultiple: 2,
-                              rowPadding: true,
-                            ),
-                            Text(
-                              dataMap[index]["name"],
-                              style: GoogleFonts.roboto(
-                                color: HexColor("#000000"),
-                                fontSize: ScreenUtil().setSp(14),
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      onTap: () {
-                        setState(() {
-                          dataMap[index]["isSelected"] =
-                              !dataMap[index]["isSelected"];
-                          for (int i = 0; i < dataMap.length; i++) {
-                            if (i == index) continue;
-                            dataMap[i]["isSelected"] = false;
-                          }
-                        });
-                      }),
-                )),
+                    ),
+                    onTap: () {
+                      setState(() {
+                        productModel.category = categoryMap[index]["name"];
+                        categoryMap[index]["isSelected"] =
+                            !categoryMap[index]["isSelected"];
+                        for (int i = 0; i < categoryMap.length; i++) {
+                          if (i == index) continue;
+                          categoryMap[i]["isSelected"] = false;
+                        }
+                      });
+                    }),
+              ),
+            ),
           ],
         ),
       ),

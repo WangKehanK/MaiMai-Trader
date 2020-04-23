@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 class GraphQlObject {
+  
+
   static HttpLink httpLink = HttpLink(
     uri: 'http://10.0.0.112:4000/graphql',
   );

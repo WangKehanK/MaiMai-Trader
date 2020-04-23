@@ -65,7 +65,7 @@ class DetailUser extends StatelessWidget {
                           ? Padding(
                               padding: EdgeInsets.only(
                                   right: ScreenUtil().setWidth(4)),
-                              child: Icon(CustomIcons.angle_left,
+                              child: Icon(CustomIcons.back,
                                   color: HexColor("#FFB800"),
                                   size: ScreenUtil().setSp(16)))
                           : Container(),

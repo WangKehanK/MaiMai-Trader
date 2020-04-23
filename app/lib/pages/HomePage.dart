@@ -22,7 +22,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context, width: 375, height: 667, allowFontScaling: true);
+    ScreenUtil.init(context, width: 375, height: 752, allowFontScaling: true);
     return Scaffold(
       appBar: CustomAppBar().generator(context),
       body: CustomPadding(

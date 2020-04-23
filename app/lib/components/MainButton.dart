@@ -81,22 +81,22 @@ class _MainButtonState extends State<MainButton> {
           child: Stack(
             alignment: Alignment.center,
             children: <Widget>[
-              type == ButtonType.SUB_CATEGORY && widget.isSelected
-                  ? Container(
-                      margin: EdgeInsets.only(
-                        bottom: ScreenUtil().setHeight(12),
-                        right: ScreenUtil().setWidth(8),
-                      ),
-                      width: ScreenUtil().setWidth(24),
-                      height: ScreenUtil().setHeight(24),
-                      decoration: BoxDecoration(
-                        color: HexColor("#FFC700"),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(45),
-                        ),
-                      ),
-                    )
-                  : Container(),
+              // type == ButtonType.SUB_CATEGORY && widget.isSelected?
+              //  Container(
+              //         margin: EdgeInsets.only(
+              //           bottom: ScreenUtil().setHeight(12),
+              //           right: ScreenUtil().setWidth(8),
+              //         ),
+              //         width: ScreenUtil().setWidth(24),
+              //         height: ScreenUtil().setHeight(24),
+              //         decoration: BoxDecoration(
+              //           color: HexColor("#FFC700"),
+              //           borderRadius: BorderRadius.all(
+              //             Radius.circular(45),
+              //           ),
+              //         ),
+              //       ),:
+              Container(),
               widget.child,
             ],
           )),

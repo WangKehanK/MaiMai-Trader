@@ -3,6 +3,7 @@ import 'package:app/common/extension.dart';
 import 'package:app/components/CustomPadding.dart';
 import 'package:app/components/MainButton.dart';
 import 'package:app/components/SearchBar.dart';
+import 'package:app/models/ProductDetailModel.dart';
 import 'package:app/pages/CreatePostPages.dart/CreatePostPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -17,12 +18,49 @@ class CreatePostDescription extends StatefulWidget {
 }
 
 class _CreatePostDescriptionState extends State<CreatePostDescription> {
+  List<Widget> tagGenerator(ProductModel productModel) {
+    List<Widget> res = [];
+
+    List<String> tagStr = [productModel.category, productModel.subCategory];
+
+    for (var i = 0; i < tagStr.length; i++) {
+      res.add(
+        Padding(
+          padding: EdgeInsets.only(right: ScreenUtil().setWidth(8)),
+          child: MainButton(
+            height: 32,
+            width: 98,
+            child: Text(
+              tagStr[i],
+              style: GoogleFonts.roboto(
+                color: HexColor("#000000"),
+                fontSize: ScreenUtil().setSp(14),
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            borderRadius: 15.0,
+            backGroundColor: HexColor("#FFFFFF"),
+            borderColor: HexColor("#000000"),
+          ),
+        ),
+      );
+    }
+
+    return res;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final ProductModel productModel = ModalRoute.of(context).settings.arguments;
+
     return CreatePostPage(
       callback: (buttonType) {
         if (buttonType == NormalButtonContent.NEXT) {
-          Navigator.pushNamed(context, '/createPostPage/image');
+          Navigator.pushNamed(
+            context,
+            '/createPostPage/image',
+            arguments: productModel,
+          );
         }
         if (buttonType == NormalButtonContent.CANCEL) {
           Navigator.pop(context);
@@ -58,6 +96,11 @@ class _CreatePostDescriptionState extends State<CreatePostDescription> {
               child: Container(
                 width: ScreenUtil().setWidth(320),
                 child: TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      productModel.title = value;
+                    });
+                  },
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Give it an attractive title'),
@@ -83,9 +126,15 @@ class _CreatePostDescriptionState extends State<CreatePostDescription> {
                 width: ScreenUtil().setWidth(320),
                 child: TextField(
                   maxLines: 100,
+                  onChanged: (value) {
+                    setState(() {
+                      productModel.description = value;
+                    });
+                  },
                   decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Tell us more about your product'),
+                    border: InputBorder.none,
+                    hintText: 'Tell us more about your product',
+                  ),
                 ),
               ),
               decoration: BoxDecoration(
@@ -101,79 +150,45 @@ class _CreatePostDescriptionState extends State<CreatePostDescription> {
               pixelMultiple: 3,
               rowPadding: true,
             ),
-            Row(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(right: ScreenUtil().setWidth(8)),
-                  child: MainButton(
-                    height: 32,
-                    width: 98,
-                    child: Text(
-                      "Category",
-                      style: GoogleFonts.roboto(
-                        color: HexColor("#000000"),
-                        fontSize: ScreenUtil().setSp(14),
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    borderRadius: 15.0,
-                    backGroundColor: HexColor("#FFFFFF"),
-                    borderColor: HexColor("#000000"),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(right: ScreenUtil().setWidth(8)),
-                  child: MainButton(
-                    height: 32,
-                    width: 98,
-                    child: Text(
-                      "Category",
-                      style: GoogleFonts.roboto(
-                        color: HexColor("#000000"),
-                        fontSize: ScreenUtil().setSp(14),
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    borderRadius: 15.0,
-                    backGroundColor: HexColor("#FFFFFF"),
-                    borderColor: HexColor("#000000"),
-                  ),
-                ),
-                Padding(
-                    padding: EdgeInsets.only(right: ScreenUtil().setWidth(8)),
-                    child: Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: HexColor("#FFFFFF"),
-                        border:
-                            Border.all(color: HexColor("#000000"), width: 1),
-                        borderRadius: BorderRadius.all(Radius.circular(45)),
-                      ),
-                      width: ScreenUtil().setWidth(32),
-                      height: ScreenUtil().setHeight(32),
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(
-                              bottom: ScreenUtil().setHeight(4),
-                              right: ScreenUtil().setWidth(4),
-                            ),
-                            width: ScreenUtil().setWidth(24),
-                            height: ScreenUtil().setHeight(24),
-                            decoration: BoxDecoration(
-                              color: HexColor("#FFC700"),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(45),
-                              ),
-                            ),
-                          ),
-                          Icon(Icons.add)
-                        ],
-                      ),
-                    ))
-              ],
-            )
+            Row(children: tagGenerator(productModel)
+                // +
+                // [
+                //   Padding(
+                //     padding: EdgeInsets.only(right: ScreenUtil().setWidth(8)),
+                //     child: Container(
+                //       alignment: Alignment.center,
+                //       decoration: BoxDecoration(
+                //         color: HexColor("#FFFFFF"),
+                //         border:
+                //             Border.all(color: HexColor("#000000"), width: 1),
+                //         borderRadius: BorderRadius.all(Radius.circular(45)),
+                //       ),
+                //       width: ScreenUtil().setWidth(32),
+                //       height: ScreenUtil().setHeight(32),
+                //       child: Stack(
+                //         alignment: Alignment.center,
+                //         children: <Widget>[
+                //           Container(
+                //             margin: EdgeInsets.only(
+                //               bottom: ScreenUtil().setHeight(4),
+                //               right: ScreenUtil().setWidth(4),
+                //             ),
+                //             width: ScreenUtil().setWidth(24),
+                //             height: ScreenUtil().setHeight(24),
+                //             decoration: BoxDecoration(
+                //               color: HexColor("#FFC700"),
+                //               borderRadius: BorderRadius.all(
+                //                 Radius.circular(45),
+                //               ),
+                //             ),
+                //           ),
+                //           Icon(Icons.add)
+                //         ],
+                //       ),
+                //     ),
+                //   )
+                // ],
+                )
           ],
         ),
       ),

@@ -1,3 +1,4 @@
+import 'package:app/common/custom_icons_icons.dart';
 import 'package:app/common/extension.dart';
 import 'package:app/components/CustomAppBar.dart';
 import 'package:app/components/Description.dart';
@@ -113,15 +114,16 @@ class _ProductDetailState extends State<ProductDetail> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Container(
-                                width: ScreenUtil().setWidth(200), // TODO
-                                child: Text(
-                                  productModel.title,
-                                  style: GoogleFonts.roboto(
-                                    fontSize: ScreenUtil().setSp(18),
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                )),
+                              width: ScreenUtil().setWidth(268),
+                              child: Text(
+                                productModel.title,
+                                style: GoogleFonts.roboto(
+                                  fontSize: ScreenUtil().setSp(18),
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
                             Padding(
                               padding: EdgeInsets.only(
                                 top: ScreenUtil().setHeight(1),
@@ -203,25 +205,96 @@ class _ProductDetailState extends State<ProductDetail> {
                     CustomPadding(
                       pixelMultiple: 3,
                       rowPadding: true,
-                      child: Row(
-                        children: <Widget>[
-                          Icon(Icons.pin_drop),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                right: ScreenUtil().setHeight(8)),
-                          ),
-                          Container(
-                            width: ScreenUtil().setWidth(300),
-                            child: Text(
-                              'Allston',
-                              style: GoogleFonts.roboto(
-                                fontSize: ScreenUtil().setSp(14),
-                                fontWeight: FontWeight.w400,
-                              ),
-                              overflow: TextOverflow.ellipsis,
+                      child: Container(
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      CustomIcons.location,
+                                      color: HexColor("#B3B3B3"),
+                                      size: ScreenUtil().setSp(16),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        right: ScreenUtil().setWidth(8),
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Text(
+                                        'Allston',
+                                        style: GoogleFonts.roboto(
+                                          fontSize: ScreenUtil().setSp(14),
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    right: ScreenUtil().setWidth(100),
+                                  ),
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      CustomIcons.cabinet_1,
+                                      color: HexColor("#B3B3B3"),
+                                      size: ScreenUtil().setSp(16),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        right: ScreenUtil().setHeight(8),
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Text(
+                                        'pick up',
+                                        style: GoogleFonts.roboto(
+                                          fontSize: ScreenUtil().setSp(14),
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding: EdgeInsets.only(
+                                top: ScreenUtil().setHeight(8),
+                              ),
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Icon(
+                                  CustomIcons.calendar_1,
+                                  color: HexColor("#B3B3B3"),
+                                  size: ScreenUtil().setSp(16),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      right: ScreenUtil().setHeight(8)),
+                                ),
+                                Container(
+                                  child: Text(
+                                    '04/20/2020',
+                                    style: GoogleFonts.roboto(
+                                      fontSize: ScreenUtil().setSp(14),
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     // CustomPadding(

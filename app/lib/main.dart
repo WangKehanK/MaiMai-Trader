@@ -20,26 +20,29 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return GraphQLProvider(
-        client: graphQlObject.client,
-        child: MaterialApp(
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          initialRoute: "/",
-          routes: {
-            ROUTE.HOME_PAGE: (context) => HomePage(),
-            ROUTE.PRODUCT_DETAIL: (context) => ProductDetail(),
-            ROUTE.CREATE_POST_PAGE + "/category": (context) => CreatePostCategory(),
-            ROUTE.CREATE_POST_PAGE + "/subCategory": (context) => CreatePostSubCategory(),
-            ROUTE.CREATE_POST_PAGE + "/description": (context) => CreatePostDescription(),
-            ROUTE.CREATE_POST_PAGE + "/image": (context) => CreatePostImage(),
-            ROUTE.CREATE_POST_PAGE + "/price": (context) => CreatePostPricePage(),
-          },
-        ));
+      client: graphQlObject.client,
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        initialRoute: ROUTE.CREATE_POST_PAGE + "/price",
+        routes: {
+          ROUTE.HOME_PAGE: (context) => HomePage(),
+          ROUTE.PRODUCT_DETAIL: (context) => ProductDetail(),
+          ROUTE.CREATE_POST_PAGE + "/category": (context) =>
+              CreatePostCategory(),
+          ROUTE.CREATE_POST_PAGE + "/subCategory": (context) =>
+              CreatePostSubCategory(),
+          ROUTE.CREATE_POST_PAGE + "/description": (context) =>
+              CreatePostDescription(),
+          ROUTE.CREATE_POST_PAGE + "/image": (context) => CreatePostImage(),
+          ROUTE.CREATE_POST_PAGE + "/price": (context) => CreatePostPricePage(),
+        },
+      ),
+    );
   }
 }

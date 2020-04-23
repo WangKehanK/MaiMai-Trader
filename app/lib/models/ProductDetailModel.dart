@@ -2,26 +2,30 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'ProductDetailModel.g.dart';
 
+// flutter pub run build_runner build
+
 @JsonSerializable()
 class ProductModel {
-  final String title;
-  final String description;
-  final String category;
-  final String condition;
-  final List<String> image;
-  final Price price;
-  final User user;
-  final Contact contact;
-  ProductModel(
+  String title;
+  String description;
+  String category;
+  String subCategory;
+  String condition;
+  List<String> image;
+  Price price;
+  User user;
+  Contact contact;
+  ProductModel({
     this.title,
     this.description,
     this.category,
     this.condition,
     this.image,
+    this.subCategory,
     this.price,
     this.user,
     this.contact,
-  );
+  });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) =>
       _$ProductModelFromJson(json);
@@ -30,8 +34,8 @@ class ProductModel {
 
 @JsonSerializable()
 class Price {
-  final int offerPrice;
-  final int originalPrice;
+  int offerPrice;
+  int originalPrice;
   Price({this.offerPrice, this.originalPrice});
 
   factory Price.fromJson(Map<String, dynamic> json) => _$PriceFromJson(json);
@@ -40,8 +44,8 @@ class Price {
 
 @JsonSerializable()
 class User {
-  final String userId;
-  final String userName;
+  String userId;
+  String userName;
   User(this.userId, this.userName);
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -50,8 +54,8 @@ class User {
 
 @JsonSerializable()
 class Contact {
-  final String email;
-  final String phone;
+  String email;
+  String phone;
   Contact(this.email, this.phone);
 
   factory Contact.fromJson(Map<String, dynamic> json) =>
