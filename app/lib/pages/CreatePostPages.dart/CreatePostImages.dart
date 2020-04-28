@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:app/common/extension.dart';
 import 'package:app/components/CustomPadding.dart';
 import 'package:app/components/MainButton.dart';
@@ -5,11 +7,15 @@ import 'package:app/models/ProductDetailModel.dart';
 import 'package:app/pages/CreatePostPages.dart/ImageDetailPage.dart';
 import 'package:app/pages/CreatePostPages.dart/CreatePostPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
 import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:http/http.dart' as http;
+
+import 'package:dio/dio.dart';
 
 class CreatePostImage extends StatefulWidget {
   CreatePostImage({Key key}) : super(key: key);
@@ -20,8 +26,9 @@ class CreatePostImage extends StatefulWidget {
 
 class _CreatePostImageState extends State<CreatePostImage> {
   List<Asset> images = List<Asset>();
+  List<String> imageurls = [];
 
-  Widget buildGridView() {
+  Widget buildGridView(ProductModel productModel) {
     return GridView.count(
       shrinkWrap: true,
       crossAxisCount: 3,
@@ -52,7 +59,7 @@ class _CreatePostImageState extends State<CreatePostImage> {
                 size: ScreenUtil().setSp(39),
               ),
             ),
-            onTap: loadAssets,
+            onTap: () => loadAssets(productModel),
           );
         }
         Asset asset = images[index];
@@ -70,18 +77,19 @@ class _CreatePostImageState extends State<CreatePostImage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ImageDetailPage(
-                          image: asset,
-                          index: index,
-                          numberOfImages: images.length,
-                        )),
+                  builder: (context) => ImageDetailPage(
+                    image: asset,
+                    index: index,
+                    numberOfImages: images.length,
+                  ),
+                ),
               );
             });
       }),
     );
   }
 
-  Future<void> loadAssets() async {
+  Future<void> loadAssets(ProductModel productModel) async {
     List<Asset> resultList = List<Asset>();
     String error = 'No Error Dectected';
 
@@ -110,10 +118,54 @@ class _CreatePostImageState extends State<CreatePostImage> {
 
     setState(() {
       images = resultList.isEmpty ? images : resultList;
+      uploadImages(productModel);
     });
   }
 
-  void upseart(List<Asset> target, List<Asset> source) {}
+  void uploadImages(ProductModel productModel) async {
+    // upload images to server
+    List<ByteData> byteDataList = await Future.wait(
+      images.map(
+        (Asset image) => image.getByteData(),
+      ),
+    );
+
+    List<MapEntry<String, MultipartFile>> uploadImages = [];
+
+    byteDataList.forEach((element) {
+      uploadImages.add(MapEntry(
+        "files",
+        MultipartFile.fromBytes(
+          element.buffer.asUint8List(
+            element.offsetInBytes,
+            element.buffer.lengthInBytes,
+          ),
+          filename: 'image.jpg',
+        ),
+      ));
+    });
+
+    Dio dio = Dio();
+    dio.options.baseUrl = "http://10.0.0.112:4000";
+    dio.options.connectTimeout = 5000;
+    dio.options.receiveTimeout = 3000;
+
+    var formData = FormData();
+
+    formData.files.addAll(uploadImages);
+
+    Response response = await dio.post("/upload", data: formData);
+
+    imageurls.clear();
+    (response.data["Data"] as List).forEach((element) {
+      String url = element["Location"];
+      imageurls.add(url);
+    });
+
+    productModel.image.clear();
+    productModel.image.addAll(imageurls);
+    print(productModel.image);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,10 +187,20 @@ class _CreatePostImageState extends State<CreatePostImage> {
       },
       child: Container(
         padding: EdgeInsets.only(top: ScreenUtil().setHeight(33)),
-        height: ScreenUtil().setHeight(520),
+        // height: ScreenUtil().setHeight(520),
         width: ScreenUtil().setWidth(342),
         child: Column(
           children: <Widget>[
+            // GestureDetector(
+            //   onTap: () async {
+
+            //   },
+            //   child: Container(
+            //     width: 100,
+            //     height: 100,
+            //     color: Colors.red,
+            //   ),
+            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -176,7 +238,7 @@ class _CreatePostImageState extends State<CreatePostImage> {
               pixelMultiple: 3,
               rowPadding: true,
             ),
-            buildGridView()
+            buildGridView(productModel)
           ],
         ),
       ),

@@ -20,7 +20,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: CustomAppBar().generator(context),
+      appBar: CustomAppBar().generator(context),
       body: CustomPadding(
         pixelMultiple: 2,
         rowPadding: true,

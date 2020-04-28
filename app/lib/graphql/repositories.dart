@@ -29,4 +29,10 @@ class Repository {
         }
       }
   """;
+
+  static const String Create_Post = """
+    mutation AddStar(\$post: PostInput!) {
+      createPost(post: \$post)
+    }
+  """;
 }

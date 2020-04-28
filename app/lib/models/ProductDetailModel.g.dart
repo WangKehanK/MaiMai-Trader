@@ -23,6 +23,13 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) {
     contact: json['contact'] == null
         ? null
         : Contact.fromJson(json['contact'] as Map<String, dynamic>),
+    createdTime: json['createdTime'] as String,
+    expiryTime: json['expiryTime'] as String,
+    isSellBefore: json['isSellBefore'] as bool,
+    delieveryMethod: json['delieveryMethod'] == null
+        ? null
+        : DelieveryMethod.fromJson(
+            json['delieveryMethod'] as Map<String, dynamic>),
   );
 }
 
@@ -34,9 +41,13 @@ Map<String, dynamic> _$ProductModelToJson(ProductModel instance) =>
       'subCategory': instance.subCategory,
       'condition': instance.condition,
       'image': instance.image,
-      'price': instance.price,
-      'user': instance.user,
-      'contact': instance.contact,
+      'price': instance.price.toJson(),
+      // 'user': instance.user.toJson(),
+      // 'contact': instance.contact.toJson(),
+      // 'createdTime': instance.createdTime,
+      'expiryTime': instance.expiryTime,
+      'isSellBefore': instance.isSellBefore,
+      'delieveryMethod': instance.delieveryMethod.toJson(),
     };
 
 Price _$PriceFromJson(Map<String, dynamic> json) {
@@ -53,8 +64,8 @@ Map<String, dynamic> _$PriceToJson(Price instance) => <String, dynamic>{
 
 User _$UserFromJson(Map<String, dynamic> json) {
   return User(
-    json['userId'] as String,
-    json['userName'] as String,
+    userId: json['userId'] as String,
+    userName: json['userName'] as String,
   );
 }
 
@@ -65,12 +76,29 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
 
 Contact _$ContactFromJson(Map<String, dynamic> json) {
   return Contact(
-    json['email'] as String,
-    json['phone'] as String,
+    email: json['email'] as String,
+    phone: json['phone'] as String,
   );
 }
 
 Map<String, dynamic> _$ContactToJson(Contact instance) => <String, dynamic>{
       'email': instance.email,
       'phone': instance.phone,
+    };
+
+DelieveryMethod _$DelieveryMethodFromJson(Map<String, dynamic> json) {
+  return DelieveryMethod(
+    acceptPickUp: json['acceptPickUp'] as bool,
+    acceptDelievery: json['acceptDelievery'] as bool,
+    address: json['address'] as String,
+    carrier: json['carrier'] as String,
+  );
+}
+
+Map<String, dynamic> _$DelieveryMethodToJson(DelieveryMethod instance) =>
+    <String, dynamic>{
+      'acceptPickUp': instance.acceptPickUp,
+      'acceptDelievery': instance.acceptDelievery,
+      'address': instance.address,
+      'carrier': instance.carrier,
     };

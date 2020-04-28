@@ -5,7 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SearchBar extends StatelessWidget {
-  const SearchBar({Key key}) : super(key: key);
+  final int searchFieldWidth;
+  const SearchBar({Key key, @required this.searchFieldWidth}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class SearchBar extends StatelessWidget {
               Padding(
                   padding: EdgeInsets.only(left: ScreenUtil().setHeight(12)),
                   child: Container(
-                      width: ScreenUtil().setWidth(245),
+                      width: ScreenUtil().setWidth(searchFieldWidth),
                       child: TextField(
                         decoration: InputDecoration(
                             border: InputBorder.none,

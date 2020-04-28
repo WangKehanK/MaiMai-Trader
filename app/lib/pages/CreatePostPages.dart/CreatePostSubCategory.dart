@@ -60,7 +60,7 @@ class _CreatePostSubCategoryState extends State<CreatePostSubCategory> {
         if (buttonType == NormalButtonContent.SAVE) {}
       },
       child: Container(
-        padding: EdgeInsets.only(top: ScreenUtil().setHeight(43)),
+        padding: EdgeInsets.only(top: ScreenUtil().setHeight(0)),
         // height: ScreenUtil().setHeight(450),
         width: ScreenUtil().setWidth(342),
         child: Column(
@@ -78,10 +78,10 @@ class _CreatePostSubCategoryState extends State<CreatePostSubCategory> {
                 ),
               ],
             ),
-            // CustomPadding(
-            //   pixelMultiple: 3,
-            //   rowPadding: true,
-            // ),
+            CustomPadding(
+              pixelMultiple: 1,
+              rowPadding: true,
+            ),
             GridView(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
@@ -139,7 +139,7 @@ class _CreatePostSubCategoryState extends State<CreatePostSubCategory> {
               ),
             ),
             CustomPadding(
-              pixelMultiple: 4,
+              pixelMultiple: 3,
               rowPadding: true,
             ),
             Row(
@@ -154,6 +154,10 @@ class _CreatePostSubCategoryState extends State<CreatePostSubCategory> {
                   ),
                 ),
               ],
+            ),
+            CustomPadding(
+              pixelMultiple: 1,
+              rowPadding: true,
             ),
             GridView(
               shrinkWrap: true,

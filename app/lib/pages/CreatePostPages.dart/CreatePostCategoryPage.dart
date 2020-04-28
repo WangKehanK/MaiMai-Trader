@@ -58,7 +58,7 @@ class _CreatePostCategoryState extends State<CreatePostCategory> {
         if (buttonType == NormalButtonContent.SAVE) {}
       },
       child: Container(
-        padding: EdgeInsets.only(top: ScreenUtil().setHeight(43)),
+        padding: EdgeInsets.only(top: ScreenUtil().setHeight(0)),
         // height: ScreenUtil().setHeight(450),
         width: ScreenUtil().setWidth(342),
         child: Column(

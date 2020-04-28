@@ -3,6 +3,7 @@ import 'package:app/components/CustomAppBar.dart';
 import 'package:app/components/CustomPadding.dart';
 import 'package:app/components/GridViewList.dart';
 import 'package:app/components/HomePageCategory.dart';
+import 'package:app/components/NavigationBar.dart';
 import 'package:app/components/SearchBar.dart';
 import 'package:app/components/TouchableButton.dart';
 import 'package:app/graphql/repositories.dart';
@@ -22,9 +23,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context, width: 375, height: 752, allowFontScaling: true);
     return Scaffold(
-      appBar: CustomAppBar().generator(context),
       body: CustomPadding(
         pixelMultiple: 2,
         rowPadding: true,
@@ -59,14 +58,14 @@ class _HomePageState extends State<HomePage> {
             (result.data["getPosts"] as List).forEach((element) {
               listOfProductModel.add(ProductCardModel.fromJson(element));
             });
-            print(listOfProductModel[0].image);
+            // print(listOfProductModel[0].image);
 
             return ListView(
               children: <Widget>[
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SearchBar(),
+                    SearchBar(searchFieldWidth: 245),
                     CustomPadding(
                       pixelMultiple: 3,
                       rowPadding: true,

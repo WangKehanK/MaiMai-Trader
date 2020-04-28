@@ -68,8 +68,8 @@ class _CreatePostDescriptionState extends State<CreatePostDescription> {
         if (buttonType == NormalButtonContent.SAVE) {}
       },
       child: Container(
-        padding: EdgeInsets.only(top: ScreenUtil().setHeight(43)),
-        height: ScreenUtil().setHeight(500),
+        padding: EdgeInsets.only(top: ScreenUtil().setHeight(0)),
+        // height: ScreenUtil().setHeight(500),
         width: ScreenUtil().setWidth(342),
         child: Column(
           children: <Widget>[

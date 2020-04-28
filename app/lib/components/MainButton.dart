@@ -4,7 +4,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-enum NormalButtonContent { NEXT, CANCEL, SAVE }
+enum NormalButtonContent {
+  NEXT,
+  CANCEL,
+  SAVE,
+  POST,
+}
 
 enum ButtonType {
   NORMAL,

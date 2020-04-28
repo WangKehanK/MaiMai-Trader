@@ -42,7 +42,7 @@ class HomePageCategory extends StatelessWidget {
       Stack(alignment: Alignment.center, children: <Widget>[
         Container(
           width: ScreenUtil().setWidth(72),
-          height: ScreenUtil().setHeight(72),
+          height: ScreenUtil().setWidth(72),
           decoration: BoxDecoration(
               color: backgroundColor,
               borderRadius: BorderRadius.all(
