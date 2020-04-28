@@ -1,4 +1,4 @@
-import { authenticate } from "../../db/controller/UserController.js";
+import { authenticate, phoneNumberLogin } from "../../db/controller/UserController.js";
 import ApolloServer from 'apollo-server-express';
 
 var users = [
@@ -27,7 +27,17 @@ var getUsers = function (args) {
 export default {
     Query: {
         getUser: getUser,
-        getUsers: getUsers
+        phoneNumberLogin: async function (obj, args, context, info) {
+            const input = JSON.parse(JSON.stringify(args));
+            try {
+                const res = await phoneNumberLogin(input);
+                return res;
+            } catch (error) {
+                // console.log(error);
+                return new ApolloServer.ApolloError(error);;
+            }
+        },
+        // getUsers: getUsers
     }, Mutation: {
         authenticate: async function (obj, args, context, info) {
             const input = JSON.parse(JSON.stringify(args));
@@ -39,5 +49,6 @@ export default {
                 return new ApolloServer.ApolloError(error.message);;
             }
         },
+
     }
 }

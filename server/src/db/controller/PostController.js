@@ -26,13 +26,14 @@ const createPostDraft = async function ({ post }) {
     postData["isDraft"] = true;
     postData["postId"] = ObjectId();
 
-    const newPost = new Post(postData);
-    try {
-        await newPost.save();
-        return postData["postId"];
-    } catch (err) {
-        throw new Error(errorName.CREATE_FAILED);
-    }
+    console.log(postData);
+    // const newPost = new Post(postData);
+    // try {
+    //     await newPost.save();
+    //     return postData["postId"];
+    // } catch (err) {
+    //     throw new Error(errorName.CREATE_FAILED);
+    // }
 };
 
 const updatePost = async function ({ post }) {

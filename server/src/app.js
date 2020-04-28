@@ -6,6 +6,8 @@ import ApolloServer from 'apollo-server-express';
 import { schema } from './graphql/index.js'
 import Config from "./config/keys.js";
 import { uploadRouter } from "./routes/upload.js";
+import { verifyRouter } from "./routes/verify.js";
+
 import { validateUserToken } from "./helper/validateUser.js";
 
 // import { getError } from "./constants/statusCode.js";
@@ -40,6 +42,7 @@ app.use(express.json(), cors(), express.static('upload'));
 server.applyMiddleware({ app });
 
 app.use('/upload', uploadRouter); // API for uploading files
+app.use('/verify', verifyRouter); // API for verify msg
 
 app.listen({ port: 4000 }, () =>
   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)

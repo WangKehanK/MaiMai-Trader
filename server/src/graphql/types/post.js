@@ -18,12 +18,14 @@ const typeDefs = gql`
         title: String
         description: String
         category: Category
+        subCategory: SubCategory
         condition: Condition
         image: [String]
         delieveryMethod: DelieveryMethod
         price: Price
         user: User
         tags: [String]
+        isSellBefore: Boolean
     }
 
     type Price {
@@ -32,8 +34,9 @@ const typeDefs = gql`
     }
 
     type DelieveryMethod {
-        deliveryType: DeliveryType!
-        address: String!
+        acceptPickUp: Boolean
+        acceptDelievery: Boolean
+        address: String
         carrier: String
     }
 
@@ -49,6 +52,21 @@ const typeDefs = gql`
         ElectronicDevice
         Fashion
         HomeAppliance
+    }
+
+    enum SubCategory {
+        Bed
+        Sofa
+        Desk
+        Chair
+        Organizer
+        Lighting
+        Appliance
+        Decor
+        Bathroom
+        Kitchen
+        Supplies
+        Service
     }
 
     enum DeliveryType {
@@ -71,7 +89,8 @@ const typeDefs = gql`
     }
 
     input DelieveryMethodInput {
-        deliveryType: DeliveryType
+        acceptPickUp: Boolean
+        acceptDelievery: Boolean
         address: String
         carrier: String
     }
@@ -81,6 +100,7 @@ const typeDefs = gql`
         title: String
         description: String
         category: Category
+        subCategory: SubCategory
         condition: Condition
         image: [String]
         delieveryMethod: DelieveryMethodInput
@@ -89,8 +109,9 @@ const typeDefs = gql`
         tags: [String]
         orderBy: Order
         expiryTime: Date
-        city: String
-        school: [String]
+        isSellBefore: Boolean
+        # city: String
+        # school: [String]
     }
 
     input PostFilters {
