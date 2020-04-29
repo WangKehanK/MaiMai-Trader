@@ -1,15 +1,41 @@
 import { UserModel } from "../models/UserModel.js"
 import { errorName } from "../../constants/statusCode.js";
 import { generateToken } from "../../helper/validateUser.js";
-
 import axios from "axios";
 import Config from "../../config/keys.js";
 import ApolloServer from 'apollo-server-express';
+import Nexmo from "nexmo";
 
+const nexmo = new Nexmo({
+    apiKey: '11912fda',
+    apiSecret: 'xVPB3J0oLoLYJpVp',
+});
+
+function requestMsg(phoneNumber) {
+    return new Promise(function (resolve, reject) {
+        console.log(phoneNumber);
+
+        nexmo.verify.request({
+            number: phoneNumber,
+            brand: 'Awesome Company',
+            code_length: 4,
+        }, (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (result && result.status == '0') {
+                    resolve(result);
+                } else {
+                    reject(result);
+                }
+            }
+        });
+    });
+}
 
 function upsertUser(userQuery, userData) {
     return new Promise(function (resolve, reject) {
-        UserModel.findOneAndUpdate(userQuery, userData, { upsert: true }, (err, res) => {
+        UserModel.findOneAndUpdate(userQuery, userData, { upsert: true, useFindAndModify: false }, (err, res) => {
             if (err) {
                 reject(err);
             }
@@ -23,44 +49,29 @@ function upsertUser(userQuery, userData) {
     });
 }
 
-function code2session(url) {
-    return new Promise(function (resolve, reject) {
-        axios.get(url)
-            .then(function (response) {
-                // handle success
-                if (response.data.errcode) {
-                    reject(response.data.errmsg);
-                }
-                var openId = response.data.openid;
-                resolve(openId);
-            })
-    });
+var phoneNumberLogin = async function (input) {
+    let phoneNumber = parseInt(input["phoneNumber"]);
+    console.log(typeof phoneNumber)
+    try {
+        var res = await requestMsg(phoneNumber);
+        return res;
+    } catch (error) {
+        console.log(error)
+        return error["error_text"];
+    }
 }
 
-var authenticate = async function ({ user }) {
-    var code = user.code;
+// {"request_id":"32642d7ec2a24ff98543d34b5d90ba3c", "status":"0"}
 
-    const url = `https://api.weixin.qq.com/sns/jscode2session?appid=${Config.WECHAT.APP_ID}&secret=${Config.WECHAT.APP_SECRET}&js_code=${code}&grant_type=authorization_code`
+var authenticate = async function ({ user }) {
+    let phoneNumber = user["contact"]["phone"];
 
     try {
-        var openId = await code2session(url).then(res => {
-            console.log("openId", res);
-            return res;
-        }).catch(err => {
-            throw err;
-        })
-
         var userQuery = {
-            openId: openId
+            "contact.phone": phoneNumber
         }
 
-        // var userData = {
-        //     ...user,
-        //     openId: openId
-        // };
-
         var userData = user;
-        userData["openId"] = openId;
 
         var ret = await upsertUser(userQuery, userData).then((res, err) => {
             return res;
@@ -76,6 +87,5 @@ var authenticate = async function ({ user }) {
     }
 };
 
-
-export { authenticate }
+export { authenticate, upsertUser, phoneNumberLogin }
 

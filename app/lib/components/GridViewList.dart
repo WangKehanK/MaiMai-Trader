@@ -142,24 +142,24 @@ class SingleGridViewComponent extends StatelessWidget {
                             )
                     ],
                   ),
-                  Row(
-                    children: <Widget>[
-                      Text(
-                        "8",
-                        style: GoogleFonts.roboto(
-                          fontSize: ScreenUtil().setSp(14),
-                          fontWeight: FontWeight.w400,
-                          color: HexColor("#808080"),
-                        ),
-                        maxLines: 2,
-                      ),
-                      Icon(
-                        Icons.favorite_border,
-                        color: HexColor("#000000"),
-                        size: ScreenUtil().setSp(16),
-                      ),
-                    ],
-                  )
+                  // Row(
+                  //   children: <Widget>[
+                  //     Text(
+                  //       "8",
+                  //       style: GoogleFonts.roboto(
+                  //         fontSize: ScreenUtil().setSp(14),
+                  //         fontWeight: FontWeight.w400,
+                  //         color: HexColor("#808080"),
+                  //       ),
+                  //       maxLines: 2,
+                  //     ),
+                  //     Icon(
+                  //       Icons.favorite_border,
+                  //       color: HexColor("#000000"),
+                  //       size: ScreenUtil().setSp(16),
+                  //     ),
+                  //   ],
+                  // )
                 ],
               ),
             ),

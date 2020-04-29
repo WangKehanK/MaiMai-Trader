@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 
 const DeliveryMethod = {
     deliveryType: {
-        type: String
+        type: [String]
     },
     address: {
         type: String
@@ -41,6 +41,9 @@ const PostSchema = new Schema({
     category: {
         type: String
     },
+    subCategory: {
+        type: String
+    },
     condition: {
         type: String
     },
@@ -49,6 +52,9 @@ const PostSchema = new Schema({
     },
     tags: {
         type: [String],
+    },
+    isSellBefore: {
+        type: Boolean
     },
     deliveryMethod: DeliveryMethod,
     price: Price,

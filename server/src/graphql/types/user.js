@@ -6,8 +6,9 @@ const typeDefs = gql`
     }
 
     extend type Query {
-        getUser: User,
-        getUsers: [User]
+        getUser(phoneNumber: String): User,
+        phoneNumberLogin(phoneNumber: String): String
+        # getUsers: [User]
     }
 
     type User {

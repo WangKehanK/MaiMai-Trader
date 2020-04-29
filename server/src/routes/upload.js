@@ -12,10 +12,12 @@ const storage = multer.memoryStorage({
     }
 });
 
-const multipleUpload = multer({ storage: storage }).array('file');
+const multipleUpload = multer({ storage: storage }).array('files');
 const upload = multer({ storage: storage }).single('file');
 
 const sendImgToAWS = (req, res, folder, bucket) => {
+    console.log("req");
+    console.log(req);
     const files = req.files;
 
     var p = new Promise(function (resolve, reject) {
@@ -73,5 +75,6 @@ uploadRouter.post("/", multipleUpload, (req, res) => {
             res.json({ "error": true, "Message": err });
         });
 })
+
 
 export { uploadRouter };

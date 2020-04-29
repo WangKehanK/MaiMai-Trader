@@ -20,7 +20,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: CustomAppBar().generator(context),
+      appBar: CustomAppBar().generator(context),
       body: CustomPadding(
         pixelMultiple: 2,
         rowPadding: true,
@@ -30,7 +30,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
           children: <Widget>[
             widget.child,
             Padding(
-              padding: EdgeInsets.only(bottom: ScreenUtil().setHeight(30)),
+              padding: EdgeInsets.only(bottom: ScreenUtil().setHeight(0)),
               child: NextAndCancel(callback: widget.callback),
             )
           ],

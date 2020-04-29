@@ -24,6 +24,7 @@ export default {
 
     Mutation: {
         async createPost(obj, args, context, info) {
+            console.log(args);
             const input = JSON.parse(JSON.stringify(args));
             try {
                 const mutationRes = await createPost(input);
