@@ -3,7 +3,7 @@
 </p>
 
 > Aiming to solve the real-world problem that international students has no place to sell their second-hand products, especially furniture.
-
+This is an old version. Please go check https://github.com/WangKehanK/Maimai
 ## Frontend Page Structure
 ```
 ├─pages
