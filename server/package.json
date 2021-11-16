@@ -11,7 +11,7 @@
     "apollo-server": "^2.11.0",
     "apollo-server-express": "^2.11.0",
     "apollo-upload-server": "^7.1.0",
-    "aws-sdk": "^2.637.0",
+    "aws-sdk": "^2.814.0",
     "axios": "^0.19.2",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
